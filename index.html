@@ -4,28 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
-    <title>Galary | Aether Edition</title>
+    <title>Galary | Aetheria Studio</title>
     
     <!-- Favicon -->
     <link rel="icon" href="https://n.f-a-k.workers.dev/geminigeneratedimage5497qx5497qx54972.png" type="image/png">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- GOOGLE SIGN IN SCRIPT -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <style>
-        /* --- 🌑 COSMIC VARIABLES --- */
+        /* --- 🌌 AETHERIA VARIABLES --- */
         :root {
-            --bg: #000000;
-            --surface: #121212;
-            --glass: rgba(20, 20, 20, 0.8);
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --gold: #D4AF37;
-            --accent: #E60023; 
-            --border: rgba(255, 255, 255, 0.1);
-            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --surface-glass: rgba(20, 20, 20, 0.6);
+            --text-main: #f0f0f0;
+            --text-muted: #888;
+            --gold: #c9a45c;
+            --accent: #E60023;
+            --border: rgba(255, 255, 255, 0.06);
+            --ease: cubic-bezier(0.19, 1, 0.22, 1);
+            --font-head: 'Italiana', serif;
+            --font-body: 'Space Grotesk', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -36,460 +41,517 @@
             min-height: 100vh;
         }
 
-        /* --- 🎞️ GRAIN TEXTURE --- */
-        .texture {
-            position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.05;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        /* --- 🌠 STARFIELD BACKGROUND --- */
+        .starfield {
+            position: fixed; inset: 0; z-index: -1;
+            background: 
+                radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.1) 50%, transparent 100%),
+                radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.05) 50%, transparent 100%);
+            background-size: 50px 50px, 120px 120px;
+            animation: moveStars 100s linear infinite;
         }
+        @keyframes moveStars { from { background-position: 0 0; } to { background-position: 100px 100px; } }
 
-        /* --- 💎 FLOATING HEADER --- */
+        /* --- 💎 GLASS HEADER --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
-            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: transform 0.4s var(--ease);
+            padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
+            background: var(--surface-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); transition: transform 0.5s var(--ease);
         }
         header.hide { transform: translateY(-100%); }
 
-        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .brand img {
-            width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
-            border: 1px solid var(--gold);
-        }
-        .brand-text { display: flex; flex-direction: column; line-height: 1; }
-        .txt-main { font-family: var(--font-body); font-weight: 800; font-size: 18px; color: #fff; letter-spacing: 0.5px; }
-        .txt-sub { font-family: var(--font-head); font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-top: 3px; }
+        .brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .brand img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
+        .brand-text span { display: block; line-height: 1; }
+        .brand .main { font-family: var(--font-body); font-weight: 700; letter-spacing: 2px; }
+        .brand .sub { font-family: var(--font-head); color: var(--gold); font-size: 10px; letter-spacing: 4px; }
 
-        /* --- ⚡ HERO SECTION --- */
-        .hero {
-            position: relative; padding: 140px 20px 20px; text-align: center; z-index: 2;
-            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15), transparent 60%);
+        .header-right { display: flex; align-items: center; gap: 20px; }
+
+        .nav-items { display: flex; gap: 20px; }
+        .nav-btn {
+            background: transparent; border: none; color: var(--text-muted); 
+            font-family: var(--font-body); font-weight: 500; font-size: 14px;
+            cursor: pointer; position: relative; padding: 5px 0; transition: 0.3s;
         }
+        .nav-btn.active, .nav-btn:hover { color: white; }
+        @media(max-width: 600px) { .nav-items { display: none; } } /* Hide nav on small screens to fit login */
+
+        /* --- GOOGLE LOGIN STYLES --- */
+        #auth-container { display: flex; align-items: center; }
         
+        .user-profile {
+            display: none; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.05); padding: 5px 15px 5px 5px;
+            border-radius: 30px; border: 1px solid var(--border);
+            cursor: pointer; transition: 0.3s;
+        }
+        .user-profile:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .user-name { font-size: 12px; font-weight: 700; color: white; max-width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+        /* --- ⚡ HERO --- */
+        .hero { padding: 180px 20px 60px; text-align: center; }
         .hero h1 {
-            font-family: var(--font-head); font-size: clamp(2rem, 8vw, 4rem);
-            margin-bottom: 15px; line-height: 1.1;
-            background: linear-gradient(180deg, #fff 0%, #888 100%);
+            font-family: var(--font-head); font-size: clamp(3rem, 10vw, 6rem);
+            background: linear-gradient(135deg, #fff 0%, #777 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 20px; line-height: 0.9;
         }
-
         .made-by {
-            font-size: 10px; font-weight: 700; letter-spacing: 3px; color: var(--gold);
-            text-transform: uppercase; border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 6px 14px; border-radius: 20px; display: inline-block; margin-bottom: 30px;
-            background: rgba(212, 175, 55, 0.05);
+            font-size: 9px; text-transform: uppercase; letter-spacing: 4px; color: var(--gold);
+            margin-bottom: 40px; display: inline-block; padding: 5px 10px;
+            border: 1px solid rgba(201, 164, 92, 0.2); border-radius: 20px;
         }
 
-        /* --- 🔍 SEARCH & TABS --- */
-        .search-wrap {
-            position: relative; width: 100%; max-width: 500px; margin: 0 auto 30px;
+        /* --- 🎛️ CONTROLS --- */
+        .controls-wrapper {
+            max-width: 600px; margin: 0 auto 50px; display: flex; flex-direction: column; gap: 20px;
         }
+        .search-bar { position: relative; width: 100%; }
         .search-input {
-            width: 100%; padding: 16px 50px 16px 25px; border-radius: 50px;
-            background: #1a1a1a; border: 1px solid var(--border);
-            color: white; font-size: 16px; font-family: var(--font-body);
-            transition: 0.3s; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            width: 100%; padding: 20px 50px 20px 30px; border-radius: 0; background: transparent;
+            border: none; border-bottom: 1px solid var(--border); color: white;
+            font-family: var(--font-body); font-size: 18px; transition: 0.3s;
         }
-        .search-input:focus {
-            outline: none; border-color: var(--gold); background: #222;
-        }
-        .search-btn {
-            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
-            width: 40px; height: 40px; border-radius: 50%; border: none;
-            background: var(--text-main); color: var(--bg); cursor: pointer;
-            transition: 0.2s; display: grid; place-items: center;
-        }
-        
-        /* Categories Scroll */
-        .tabs-scroll {
-            display: flex; gap: 10px; overflow-x: auto; padding: 10px 20px;
-            scrollbar-width: none; justify-content: center;
-        }
-        .tabs-scroll::-webkit-scrollbar { display: none; } /* Hide scrollbar */
-        
-        .tab-btn {
-            white-space: nowrap; padding: 10px 20px; border-radius: 25px;
-            border: 1px solid var(--border); background: rgba(255,255,255,0.03);
-            color: var(--text-muted); cursor: pointer; font-family: var(--font-body);
-            font-weight: 600; font-size: 13px; transition: 0.3s;
-        }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--text-main); color: var(--bg); border-color: var(--text-main);
-        }
+        .search-input:focus { outline: none; border-bottom-color: var(--gold); }
+        .search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
 
-        /* --- 🖼️ MASONRY GRID --- */
-        .grid {
-            column-count: 5; column-gap: 15px; padding: 20px 30px;
-            max-width: 2000px; margin: 0 auto; z-index: 2; position: relative;
+        .tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .tag {
+            padding: 8px 20px; border: 1px solid var(--border); border-radius: 50px;
+            font-size: 12px; color: var(--text-muted); cursor: pointer; transition: 0.3s;
         }
-        @media (max-width: 1400px) { .grid { column-count: 4; } }
-        @media (max-width: 1000px) { .grid { column-count: 3; padding: 15px; } }
-        @media (max-width: 600px) { .grid { column-count: 2; column-gap: 8px; padding: 10px; } }
+        .tag:hover, .tag.active { border-color: var(--gold); color: white; background: rgba(201, 164, 92, 0.1); }
+
+        /* --- 🧱 GRID --- */
+        .grid {
+            column-count: 5; column-gap: 20px; padding: 0 40px; max-width: 2400px; margin: 0 auto;
+        }
+        @media(max-width:1400px){ .grid{column-count:4;} }
+        @media(max-width:1000px){ .grid{column-count:3;} }
+        @media(max-width:600px){ .grid{column-count:2; padding:0 15px;} }
 
         .card {
-            break-inside: avoid; margin-bottom: 15px; position: relative;
-            border-radius: 12px; overflow: hidden; cursor: zoom-in;
-            background: #111; transform: translateY(30px); opacity: 0;
-            transition: transform 0.6s var(--ease), opacity 0.6s ease;
+            break-inside: avoid; margin-bottom: 20px; position: relative;
+            background: #111; border-radius: 8px; overflow: hidden;
+            transform-style: preserve-3d; perspective: 1000px; cursor: zoom-in;
+            opacity: 0; transform: translateY(40px); transition: opacity 0.6s, transform 0.6s;
         }
-        .card.reveal { transform: translateY(0); opacity: 1; }
-
-        .card img {
-            width: 100%; display: block; transition: transform 0.5s;
-        }
+        .card.visible { opacity: 1; transform: translateY(0); }
+        .card img { width: 100%; display: block; transition: 0.4s; }
         .card:hover img { transform: scale(1.05); }
 
-        /* --- 📱 FULLSCREEN MODAL --- */
+        /* --- 🎨 STUDIO MODAL --- */
         .modal {
-            position: fixed; inset: 0; z-index: 5000;
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: 0.3s var(--ease);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000;
+            display: flex; opacity: 0; pointer-events: none; transition: 0.4s var(--ease);
+            backdrop-filter: blur(10px);
         }
         .modal.active { opacity: 1; pointer-events: all; }
 
-        .modal-img-wrap {
-            max-width: 100%; max-height: 75vh; overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5); margin-bottom: 30px;
-        }
-        .modal-img-wrap img { display: block; max-width: 100%; max-height: 75vh; object-fit: contain; }
-
-        .modal-actions { display: flex; gap: 15px; }
+        .modal-layout { display: flex; width: 100%; height: 100%; }
         
-        .pill-btn {
-            display: flex; align-items: center; gap: 8px;
-            padding: 12px 24px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1); color: white; font-weight: 600; font-size: 14px;
-            cursor: pointer; transition: 0.2s;
+        .studio-preview {
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            padding: 40px; position: relative;
         }
-        .pill-btn:hover { background: white; color: black; transform: scale(1.05); }
-        .pill-btn i { font-size: 16px; }
+        .studio-preview img {
+            max-width: 100%; max-height: 90vh; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
 
-        .close-modal {
-            position: absolute; top: 25px; right: 25px; font-size: 28px; color: white;
-            cursor: pointer; opacity: 0.6; transition: 0.2s; padding: 10px;
+        .studio-controls {
+            width: 350px; background: #0e0e0e; border-left: 1px solid var(--border);
+            padding: 40px 30px; display: flex; flex-direction: column; gap: 30px; overflow-y: auto;
         }
-        .close-modal:hover { opacity: 1; transform: rotate(90deg); }
+        .studio-header h2 { font-family: var(--font-head); color: white; margin-bottom: 5px; }
+        .studio-header p { color: var(--gold); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* --- 🔔 TOAST NOTIFICATIONS --- */
-        #toast-box {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; gap: 10px; z-index: 6000; width: max-content;
+        .slider-group { display: flex; flex-direction: column; gap: 10px; }
+        .slider-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+        input[type=range] { width: 100%; height: 4px; background: #333; border-radius: 2px; outline: none; appearance: none; }
+        input[type=range]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; cursor: pointer; }
+
+        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+        .btn {
+            padding: 15px; border: 1px solid var(--border); background: transparent;
+            color: white; font-family: var(--font-body); font-weight: 700; cursor: pointer;
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; font-size: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
+        .btn:hover { background: white; color: black; border-color: white; }
+        .btn-primary { background: var(--gold); border-color: var(--gold); color: black; }
+        .btn-primary:hover { background: #e0c070; }
+
+        .close-modal { position: absolute; top: 20px; left: 20px; color: white; font-size: 24px; cursor: pointer; z-index: 10; }
+
+        @media (max-width: 900px) {
+            .modal-layout { flex-direction: column; }
+            .studio-preview { height: 50%; padding: 20px; }
+            .studio-preview img { max-height: 100%; }
+            .studio-controls { width: 100%; height: 50%; border-left: none; border-top: 1px solid var(--border); }
+        }
+
+        /* --- 🔔 TOAST --- */
         .toast {
-            background: #222; border: 1px solid var(--border);
-            color: white; padding: 12px 20px; border-radius: 50px;
-            display: flex; align-items: center; gap: 10px;
-            font-size: 13px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: slideUp 0.3s var(--ease) forwards;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: white; color: black; padding: 12px 30px; font-weight: 700;
+            font-size: 12px; opacity: 0; transition: 0.4s var(--ease); pointer-events: none; z-index: 6000;
+            border-radius: 30px;
         }
-        .toast i { color: var(--gold); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- 🌀 LOADING SPINNER --- */
-        .bottom-loader {
-            width: 100%; padding: 40px; display: flex; justify-content: center;
-            opacity: 0; transition: 0.3s;
-        }
-        .bottom-loader.show { opacity: 1; }
-        .spinner {
-            width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: var(--gold); border-radius: 50%;
-            animation: spin 0.8s infinite linear;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
     </style>
 </head>
 <body>
 
-    <div class="texture"></div>
+    <div class="starfield"></div>
 
-    <header id="navbar">
-        <a href="#" class="brand" onclick="location.reload()">
+    <header id="header">
+        <div class="brand" onclick="location.reload()">
             <img src="https://n.f-a-k.workers.dev/geminigeneratedimage5497qx5497qx54972.png" alt="Logo">
             <div class="brand-text">
-                <span class="txt-main">GALARY</span>
-                <span class="txt-sub">AGENCY</span>
+                <span class="main">GALARY</span>
+                <span class="sub">AETHERIA</span>
             </div>
-        </a>
+        </div>
+        
+        <div class="header-right">
+            <div class="nav-items">
+                <button class="nav-btn active" onclick="switchView('grid')">EXPLORE</button>
+                <button class="nav-btn" onclick="switchView('fav')">FAVORITES</button>
+            </div>
+
+            <!-- GOOGLE LOGIN SECTION -->
+            <div id="auth-container">
+                <!-- IMPORTANT: Paste your Client ID below -->
+                <div id="g_id_onload"
+                     data-client_id="YOUR_GOOGLE_CLIENT_ID_HERE"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" 
+                     data-type="icon" 
+                     data-shape="circle" 
+                     data-theme="filled_black" 
+                     data-text="signin_with" 
+                     data-size="large">
+                </div>
+
+                <!-- Logged In Profile -->
+                <div class="user-profile" id="user-profile" onclick="logout()">
+                    <img id="user-img" src="" class="user-avatar">
+                    <span id="user-name" class="user-name">User</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div id="toast-box"></div>
+    <div class="toast" id="toast">ACTION COMPLETED</div>
 
-    <section class="hero">
-        <h1>VISUALS FROM<br>THE AETHER</h1>
-        <div class="made-by">Made by Faizan Ahmed</div>
-        
-        <div class="search-wrap">
-            <input type="text" class="search-input" id="search-input" placeholder="Search visuals..." autocomplete="off">
-            <button class="search-btn" onclick="triggerSearch()"><i class="fas fa-search"></i></button>
-        </div>
+    <section class="hero" id="hero">
+        <h1>VISUAL<br>ALCHEMY</h1>
+        <div class="made-by">Engineered by Faizan Ahmed</div>
 
-        <div class="tabs-scroll">
-            <button class="tab-btn active" onclick="filterTag('Random Aesthetic', this)">For You</button>
-            <button class="tab-btn" onclick="filterTag('Dark Nature 8k', this)">Nature</button>
-            <button class="tab-btn" onclick="filterTag('Imran Khan Aesthetic', this)">Imran Khan</button>
-            <button class="tab-btn" onclick="filterTag('Cyberpunk City', this)">Neon</button>
-            <button class="tab-btn" onclick="filterTag('Islamic Architecture', this)">Islamic</button>
-            <button class="tab-btn" onclick="filterTag('JDM Cars Wallpaper', this)">Cars</button>
-            <button class="tab-btn" onclick="filterTag('Black and White Art', this)">Abstract</button>
+        <div class="controls-wrapper">
+            <div class="search-bar">
+                <input type="text" class="search-input" id="search" placeholder="Search the Aether..." autocomplete="off">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="tags">
+                <span class="tag active" onclick="search('Random Aesthetic')">Mixed</span>
+                <span class="tag" onclick="search('Dark Nature 8k')">Nature</span>
+                <span class="tag" onclick="search('Cyberpunk')">Neon</span>
+                <span class="tag" onclick="search('Imran Khan')">IK</span>
+                <span class="tag" onclick="search('Islamic Geometric')">Islamic</span>
+                <span class="tag" onclick="search('Luxury Cars')">Cars</span>
+            </div>
         </div>
     </section>
 
     <div class="grid" id="grid"></div>
-    
-    <div class="bottom-loader" id="loader">
-        <div class="spinner"></div>
+    <div style="height: 100px; display:flex; justify-content:center; align-items:center;">
+        <i class="fas fa-circle-notch fa-spin" id="loader" style="color:var(--text-muted); opacity:0;"></i>
     </div>
 
-    <!-- MODAL -->
+    <!-- STUDIO MODAL -->
     <div class="modal" id="modal">
-        <div class="close-modal" onclick="closeModal()">&times;</div>
-        
-        <div class="modal-img-wrap">
-            <img id="modal-img" src="" alt="Full View">
-        </div>
-        
-        <div class="modal-actions">
-            <button class="pill-btn" id="dl-btn" onclick="downloadImage()">
-                <i class="fas fa-download"></i> Save
-            </button>
-            <button class="pill-btn" id="share-btn" onclick="shareImage()">
-                <i class="fas fa-share-alt"></i> Share
-            </button>
+        <div class="modal-layout">
+            <div class="close-modal" onclick="closeModal()"><i class="fas fa-arrow-left"></i></div>
+            <div class="studio-preview">
+                <img id="preview-img" crossorigin="anonymous" src="">
+            </div>
+            <div class="studio-controls">
+                <div class="studio-header">
+                    <h2>STUDIO</h2>
+                    <p>Adjust & Download</p>
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label"><span>Brightness</span><span id="val-b">100%</span></div>
+                    <input type="range" min="50" max="150" value="100" oninput="updateFilter('brightness', this.value)">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label"><span>Contrast</span><span id="val-c">100%</span></div>
+                    <input type="range" min="50" max="150" value="100" oninput="updateFilter('contrast', this.value)">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label"><span>Saturation</span><span id="val-s">100%</span></div>
+                    <input type="range" min="0" max="200" value="100" oninput="updateFilter('saturate', this.value)">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label"><span>Grayscale</span><span id="val-g">0%</span></div>
+                    <input type="range" min="0" max="100" value="0" oninput="updateFilter('grayscale', this.value)">
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="dl-btn" onclick="downloadEdited()"><i class="fas fa-download"></i> Download Edit</button>
+                    <button class="btn" id="fav-btn" onclick="toggleFav()"><i class="far fa-heart"></i> Add to Favorites</button>
+                    <button class="btn" onclick="shareImage()"><i class="fas fa-share-nodes"></i> Share</button>
+                    <button class="btn" onclick="resetFilters()" style="opacity:0.6; font-size:10px;">Reset Filters</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- CORE SETTINGS ---
-        const API_BASE = "https://api.xyro.site/search/pinterest?q=";
+        // --- 1. GOOGLE AUTHENTICATION LOGIC ---
+        
+        // Load stored user on refresh
+        window.addEventListener('load', () => {
+            const storedUser = localStorage.getItem('galary_user');
+            if(storedUser) {
+                updateUI(JSON.parse(storedUser));
+            }
+        });
+
+        function handleCredentialResponse(response) {
+            // Decode JWT Token
+            const responsePayload = decodeJwtResponse(response.credential);
+            
+            const userData = {
+                name: responsePayload.name,
+                picture: responsePayload.picture,
+                email: responsePayload.email
+            };
+
+            // Save to local storage
+            localStorage.setItem('galary_user', JSON.stringify(userData));
+            updateUI(userData);
+            showToast("WELCOME, " + userData.name.toUpperCase());
+        }
+
+        function decodeJwtResponse(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        function updateUI(user) {
+            // Hide Google Button, Show Profile
+            document.querySelector('.g_id_signin').style.display = 'none';
+            const profile = document.getElementById('user-profile');
+            document.getElementById('user-img').src = user.picture;
+            document.getElementById('user-name').innerText = user.name;
+            profile.style.display = 'flex';
+        }
+
+        function logout() {
+            if(confirm('Logout from Galary?')) {
+                localStorage.removeItem('galary_user');
+                location.reload();
+            }
+        }
+
+        // --- 2. MAIN APP LOGIC ---
+        const API = "https://api.xyro.site/search/pinterest?q=";
         const grid = document.getElementById('grid');
         const loader = document.getElementById('loader');
         
         let currentQuery = "Aesthetic Wallpapers 4k";
-        let isFetching = false;
-        let currentModalUrl = "";
+        let favorites = JSON.parse(localStorage.getItem('aetheria_favs')) || [];
+        let currentUrl = "";
+        let filters = { brightness: 100, contrast: 100, saturate: 100, grayscale: 0 };
+        let view = 'grid';
 
-        // --- INIT ---
-        window.onload = () => {
-            fetchImages(currentQuery);
-            setupInfiniteScroll();
-        };
+        // Load content
+        fetchImages(currentQuery);
+        setupScroll();
 
-        // --- 1. SMART IMAGE ENGINE ---
-        async function fetchImages(query, isAppend = false) {
-            if (isFetching) return;
-            isFetching = true;
-            loader.classList.add('show');
-
-            if (!isAppend) grid.innerHTML = ''; 
+        async function fetchImages(query, append = false) {
+            loader.style.opacity = 1;
+            if(!append) grid.innerHTML = '';
 
             try {
-                // Randomize query slightly to prevent duplicates on scroll
-                const randomPage = Math.floor(Math.random() * 10) + 1;
-                const finalQuery = isAppend ? `${query} ${randomPage}` : query;
+                const page = Math.floor(Math.random() * 10) + 1;
+                const res = await fetch(API + encodeURIComponent(append ? query + ' ' + page : query));
+                const data = await res.json();
                 
-                const response = await fetch(API_BASE + encodeURIComponent(finalQuery));
-                const data = await response.json();
+                let imgs = (data.data || data.result || data || []).map(x => 
+                    x.image || x.media || x.url || x.display_url || x
+                ).filter(u => typeof u === 'string' && u.startsWith('http'));
+
+                imgs.sort(() => Math.random() - 0.5);
                 
-                let images = [];
-                if (Array.isArray(data)) images = data;
-                else if (data.data) images = data.data;
-                else if (data.result) images = data.result;
+                imgs.forEach((url, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `<img src="${url}" loading="lazy">`;
+                    card.onclick = () => openStudio(url);
+                    
+                    // 3D Tilt
+                    card.onmousemove = (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        card.style.transform = `rotateY(${(x - rect.width/2)/10}deg) rotateX(${-(y - rect.height/2)/10}deg) scale(1.05)`;
+                    };
+                    card.onmouseleave = () => card.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
 
-                const validUrls = images
-                    .map(x => x.image || x.media || x.url || x.display_url || x)
-                    .filter(u => typeof u === 'string' && u.startsWith('http'));
+                    grid.appendChild(card);
+                    setTimeout(() => card.classList.add('visible'), i * 80);
+                });
 
-                if (validUrls.length === 0 && !isAppend) {
-                    showToast("No results found.", "error");
-                }
-
-                renderGrid(validUrls);
-
-            } catch (error) {
-                console.error("Fetch Error:", error);
-                if(!isAppend) showToast("Check your internet connection.", "error");
-            } finally {
-                isFetching = false;
-                loader.classList.remove('show');
-            }
+            } catch(e) { console.error(e); }
+            loader.style.opacity = 0;
         }
 
-        function renderGrid(urls) {
-            urls.sort(() => Math.random() - 0.5); // Shuffle
-
-            urls.forEach((url, i) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<img src="${url}" loading="lazy" alt="Visual">`;
-                card.onclick = () => openModal(url);
-                grid.appendChild(card);
-
-                // Waterfall animation effect
-                setTimeout(() => card.classList.add('reveal'), i * 80);
-            });
-        }
-
-        // --- 2. INFINITE SCROLL ---
-        function setupInfiniteScroll() {
-            window.addEventListener('scroll', () => {
-                const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-                // Load more when user is 300px away from bottom
-                if (scrollTop + clientHeight >= scrollHeight - 300) {
-                    fetchImages(currentQuery, true);
-                }
-            });
-        }
-
-        // --- 3. INTERACTIVE SEARCH ---
-        function triggerSearch() {
-            const val = document.getElementById('search-input').value;
-            if (val.trim()) {
-                currentQuery = val;
-                fetchImages(val);
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            }
-        }
-
-        document.getElementById('search-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') triggerSearch();
-        });
-
-        function filterTag(tag, btnElement) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
-            document.getElementById('search-input').value = tag === 'Random Aesthetic' ? '' : tag;
-            currentQuery = tag;
-            fetchImages(tag);
-        }
-
-        // --- 4. MODAL SYSTEM ---
-        const modal = document.getElementById('modal');
-        const modalImg = document.getElementById('modal-img');
-
-        function openModal(url) {
-            currentModalUrl = url;
-            modalImg.src = url;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Lock scroll
+        function openStudio(url) {
+            currentUrl = url;
+            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
+            document.getElementById('preview-img').src = proxyUrl;
+            resetFilters();
+            updateFavBtn();
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Unlock scroll
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        // --- 5. DOWNLOAD (Bypass Security) ---
-        async function downloadImage() {
+        function updateFilter(type, val) {
+            filters[type] = val;
+            const map = { brightness:'val-b', contrast:'val-c', saturate:'val-s', grayscale:'val-g' };
+            document.getElementById(map[type]).innerText = val + '%';
+            document.getElementById('preview-img').style.filter = `brightness(${filters.brightness}%) contrast(${filters.contrast}%) saturate(${filters.saturate}%) grayscale(${filters.grayscale}%)`;
+        }
+
+        function resetFilters() {
+            filters = { brightness: 100, contrast: 100, saturate: 100, grayscale: 0 };
+            document.querySelectorAll('input[type=range]').forEach(r => r.value = (r.min == 0 && r.max == 100) ? 0 : 100);
+            updateFilter('brightness', 100);
+        }
+
+        async function downloadEdited() {
             const btn = document.getElementById('dl-btn');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
-            
-            try {
-                // Use CORS Proxy to get the raw image data
-                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
-                const response = await fetch(proxyUrl);
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-                
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = `Galary_Aether_${Date.now()}.jpg`;
-                document.body.appendChild(link);
-                link.click();
-                
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(blobUrl);
-                
-                showToast("Image Saved to Gallery!", "success");
-            } catch (err) {
-                console.error(err);
-                showToast("Auto-save failed. Opening image...", "error");
-                setTimeout(() => window.open(currentModalUrl, '_blank'), 1000);
-            } finally {
-                btn.innerHTML = originalText;
-            }
-        }
-
-        // --- 6. SHARE (WhatsApp/Native) ---
-        async function shareImage() {
-            const btn = document.getElementById('share-btn');
-            const originalText = btn.innerHTML;
-            
-            if (!navigator.share) {
-                navigator.clipboard.writeText(currentModalUrl);
-                showToast("Link Copied!", "success");
-                return;
-            }
-
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading...`;
+            const oldTxt = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Rendering...`;
 
             try {
-                // Fetch image to share as file
-                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
-                const response = await fetch(proxyUrl);
-                const blob = await response.blob();
-                const file = new File([blob], "visual.jpg", { type: blob.type });
+                const img = document.getElementById('preview-img');
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                if (!img.complete) await new Promise(r => img.onload = r);
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.filter = `brightness(${filters.brightness}%) contrast(${filters.contrast}%) saturate(${filters.saturate}%) grayscale(${filters.grayscale}%)`;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        files: [file],
-                        title: 'Galary Visual',
-                        text: 'Shared from Galary Agency'
-                    });
-                } else {
-                    throw new Error("File share not supported");
-                }
-            } catch (err) {
-                // Fallback to Link Share
-                try {
-                    await navigator.share({
-                        title: 'Galary Visual',
-                        url: currentModalUrl
-                    });
-                } catch (e) {
-                    console.log("Share cancelled");
-                }
-            } finally {
-                btn.innerHTML = originalText;
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = `Galary_Edit_${Date.now()}.jpg`;
+                    link.href = url;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    showToast("MASTERPIECE SAVED");
+                    btn.innerHTML = oldTxt;
+                }, 'image/jpeg', 0.95);
+
+            } catch (e) {
+                showToast("RENDER FAILED - DOWNLOADING RAW");
+                window.open(currentUrl, '_blank');
+                btn.innerHTML = oldTxt;
             }
         }
 
-        // --- 7. TOAST NOTIFICATIONS ---
-        function showToast(msg, type = 'normal') {
-            const box = document.getElementById('toast-box');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            
-            let icon = 'fa-info-circle';
-            if(type === 'success') icon = 'fa-check-circle';
-            if(type === 'error') icon = 'fa-triangle-exclamation';
-
-            toast.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
-            box.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+        function toggleFav() {
+            const idx = favorites.indexOf(currentUrl);
+            if (idx > -1) { favorites.splice(idx, 1); showToast("REMOVED FROM FAVORITES"); }
+            else { favorites.push(currentUrl); showToast("SAVED TO FAVORITES"); }
+            localStorage.setItem('aetheria_favs', JSON.stringify(favorites));
+            updateFavBtn();
+            if(view === 'fav') loadFavs();
         }
 
-        // --- HIDE HEADER ON SCROLL ---
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const current = window.pageYOffset;
-            const header = document.getElementById('navbar');
-            
-            if (current > 50) {
-                if (current > lastScroll) header.classList.add('hide');
-                else header.classList.remove('hide');
-            }
-            lastScroll = current;
+        function updateFavBtn() {
+            const btn = document.getElementById('fav-btn');
+            const isFav = favorites.includes(currentUrl);
+            btn.innerHTML = isFav ? `<i class="fas fa-heart" style="color:var(--accent)"></i> Saved` : `<i class="far fa-heart"></i> Add to Favorites`;
+        }
+
+        function loadFavs() {
+            grid.innerHTML = '';
+            if(favorites.length === 0) grid.innerHTML = '<div style="width:100%; text-align:center; padding:50px;">NO ARTIFACTS FOUND</div>';
+            favorites.forEach(url => {
+                const card = document.createElement('div');
+                card.className = 'card visible';
+                card.innerHTML = `<img src="${url}">`;
+                card.onclick = () => openStudio(url);
+                grid.appendChild(card);
+            });
+        }
+
+        function search(q) {
+            currentQuery = q;
+            document.getElementById('search').value = q;
+            document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+            switchView('grid');
+            fetchImages(q);
+        }
+
+        document.getElementById('search').addEventListener('keypress', e => {
+            if(e.key === 'Enter') search(e.target.value);
         });
+
+        function switchView(v) {
+            view = v;
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if(v === 'grid') { document.getElementById('hero').style.display = 'block'; fetchImages(currentQuery); } 
+            else { document.getElementById('hero').style.display = 'none'; loadFavs(); }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        function setupScroll() {
+            let lastY = 0;
+            window.addEventListener('scroll', () => {
+                const h = document.getElementById('header');
+                const currY = window.scrollY;
+                if(currY > lastY && currY > 50) h.classList.add('hide');
+                else h.classList.remove('hide');
+                lastY = currY;
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500 && view === 'grid') fetchImages(currentQuery, true);
+            });
+        }
+
+        async function shareImage() {
+            if(navigator.share) navigator.share({ title: 'Galary', url: currentUrl });
+            else { navigator.clipboard.writeText(currentUrl); showToast("LINK COPIED"); }
+        }
 
     </script>
 </body>
