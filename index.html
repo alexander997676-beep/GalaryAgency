@@ -4,246 +4,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
-    <meta name="description" content="Premium Visual Gallery">
     <title>Galary | Aether Edition</title>
     
     <!-- Favicon -->
     <link rel="icon" href="https://n.f-a-k.workers.dev/geminigeneratedimage5497qx5497qx54972.png" type="image/png">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Manrope:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* --- 🌌 COSMIC VARIABLES --- */
+        /* --- 🌑 COSMIC VARIABLES --- */
         :root {
-            --bg: #030303;
-            --surface: #0f0f0f;
-            --surface-glass: rgba(20, 20, 20, 0.7);
+            --bg: #000000;
+            --surface: #121212;
+            --glass: rgba(20, 20, 20, 0.8);
             --text-main: #ffffff;
             --text-muted: #888888;
-            --accent: #E60023; /* Pinterest Red */
             --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.3);
-            --border: rgba(255, 255, 255, 0.08);
-            --font-head: 'Cinzel', serif;
-            --font-body: 'Manrope', sans-serif;
+            --accent: #E60023; 
+            --border: rgba(255, 255, 255, 0.1);
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* --- GLOBAL RESET --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body {
             background-color: var(--bg); color: var(--text-main);
             font-family: var(--font-body); overflow-x: hidden;
-            min-height: 100vh; scroll-behavior: smooth;
+            min-height: 100vh;
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
         /* --- 🎞️ GRAIN TEXTURE --- */
         .texture {
-            position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.035;
+            position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.05;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* --- 💎 FLOATING HEADER --- */
         header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(3, 3, 3, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
             transition: transform 0.4s var(--ease);
         }
         header.hide { transform: translateY(-100%); }
 
         .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .brand img {
-            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
-            border: 1px solid var(--gold); box-shadow: 0 0 15px var(--gold-glow);
+            width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+            border: 1px solid var(--gold);
         }
         .brand-text { display: flex; flex-direction: column; line-height: 1; }
-        .txt-main { font-family: var(--font-body); font-weight: 800; font-size: 18px; color: #fff; letter-spacing: 1px; }
-        .txt-sub { font-family: var(--font-head); font-size: 10px; letter-spacing: 3px; color: var(--gold); margin-top: 2px; }
+        .txt-main { font-family: var(--font-body); font-weight: 800; font-size: 18px; color: #fff; letter-spacing: 0.5px; }
+        .txt-sub { font-family: var(--font-head); font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-top: 3px; }
 
         /* --- ⚡ HERO SECTION --- */
         .hero {
-            position: relative; padding: 160px 20px 60px; text-align: center;
-            background: radial-gradient(circle at 50% -20%, rgba(255, 215, 0, 0.08), transparent 60%);
+            position: relative; padding: 140px 20px 20px; text-align: center; z-index: 2;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15), transparent 60%);
         }
         
         .hero h1 {
-            font-family: var(--font-head); font-size: clamp(2.5rem, 6vw, 5rem);
-            margin-bottom: 15px; line-height: 1; letter-spacing: -1px;
-            background: linear-gradient(180deg, #fff 0%, #666 100%);
+            font-family: var(--font-head); font-size: clamp(2rem, 8vw, 4rem);
+            margin-bottom: 15px; line-height: 1.1;
+            background: linear-gradient(180deg, #fff 0%, #888 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
         }
 
         .made-by {
-            font-size: 10px; font-weight: 700; letter-spacing: 4px; color: var(--gold);
+            font-size: 10px; font-weight: 700; letter-spacing: 3px; color: var(--gold);
             text-transform: uppercase; border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 8px 16px; border-radius: 20px; display: inline-block; margin-bottom: 40px;
+            padding: 6px 14px; border-radius: 20px; display: inline-block; margin-bottom: 30px;
             background: rgba(212, 175, 55, 0.05);
         }
 
-        /* --- 🔍 SEARCH BAR --- */
+        /* --- 🔍 SEARCH & TABS --- */
         .search-wrap {
-            position: relative; width: 100%; max-width: 550px; margin: 0 auto 40px;
-            transition: transform 0.3s var(--ease);
+            position: relative; width: 100%; max-width: 500px; margin: 0 auto 30px;
         }
-        .search-wrap:hover { transform: scale(1.02); }
-        
         .search-input {
-            width: 100%; padding: 20px 60px 20px 30px; border-radius: 100px;
+            width: 100%; padding: 16px 50px 16px 25px; border-radius: 50px;
             background: #1a1a1a; border: 1px solid var(--border);
             color: white; font-size: 16px; font-family: var(--font-body);
-            transition: all 0.3s; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            transition: 0.3s; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
         .search-input:focus {
             outline: none; border-color: var(--gold); background: #222;
-            box-shadow: 0 0 30px var(--gold-glow);
         }
         .search-btn {
-            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-            width: 44px; height: 44px; border-radius: 50%; border: none;
+            position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+            width: 40px; height: 40px; border-radius: 50%; border: none;
             background: var(--text-main); color: var(--bg); cursor: pointer;
-            font-size: 18px; transition: 0.3s var(--ease);
+            transition: 0.2s; display: grid; place-items: center;
         }
-        .search-btn:hover { background: var(--gold); transform: translateY(-50%) rotate(90deg); }
-
-        /* --- 🏷️ CATEGORY TABS --- */
-        .tabs-container {
-            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
-            padding: 0 20px;
+        
+        /* Categories Scroll */
+        .tabs-scroll {
+            display: flex; gap: 10px; overflow-x: auto; padding: 10px 20px;
+            scrollbar-width: none; justify-content: center;
         }
+        .tabs-scroll::-webkit-scrollbar { display: none; } /* Hide scrollbar */
+        
         .tab-btn {
-            padding: 10px 20px; border-radius: 30px; border: 1px solid var(--border);
-            background: transparent; color: var(--text-muted); cursor: pointer;
-            font-family: var(--font-body); font-weight: 600; font-size: 13px;
-            transition: 0.3s;
+            white-space: nowrap; padding: 10px 20px; border-radius: 25px;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+            color: var(--text-muted); cursor: pointer; font-family: var(--font-body);
+            font-weight: 600; font-size: 13px; transition: 0.3s;
         }
-        .tab-btn:hover, .tab-btn.active {
-            border-color: var(--text-main); color: var(--text-main); background: rgba(255,255,255,0.05);
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--text-main); color: var(--bg); border-color: var(--text-main);
         }
 
         /* --- 🖼️ MASONRY GRID --- */
         .grid {
-            column-count: 5; column-gap: 20px; padding: 0 40px;
-            max-width: 2200px; margin: 0 auto;
+            column-count: 5; column-gap: 15px; padding: 20px 30px;
+            max-width: 2000px; margin: 0 auto; z-index: 2; position: relative;
         }
-        @media (max-width: 1600px) { .grid { column-count: 4; } }
-        @media (max-width: 1200px) { .grid { column-count: 3; padding: 0 20px; } }
-        @media (max-width: 800px) { .grid { column-count: 2; column-gap: 10px; padding: 0 10px; } }
+        @media (max-width: 1400px) { .grid { column-count: 4; } }
+        @media (max-width: 1000px) { .grid { column-count: 3; padding: 15px; } }
+        @media (max-width: 600px) { .grid { column-count: 2; column-gap: 8px; padding: 10px; } }
 
         .card {
-            break-inside: avoid; margin-bottom: 20px; position: relative;
-            border-radius: 16px; overflow: hidden; cursor: zoom-in;
-            background: #111; transform: translateY(50px); opacity: 0;
+            break-inside: avoid; margin-bottom: 15px; position: relative;
+            border-radius: 12px; overflow: hidden; cursor: zoom-in;
+            background: #111; transform: translateY(30px); opacity: 0;
             transition: transform 0.6s var(--ease), opacity 0.6s ease;
         }
         .card.reveal { transform: translateY(0); opacity: 1; }
 
         .card img {
-            width: 100%; display: block; transition: transform 0.7s var(--ease), filter 0.3s;
-            filter: brightness(0.9);
+            width: 100%; display: block; transition: transform 0.5s;
         }
-        .card:hover img { transform: scale(1.06); filter: brightness(1.1); }
+        .card:hover img { transform: scale(1.05); }
 
-        /* Hover Overlay */
-        .card-overlay {
-            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            opacity: 0; transition: 0.3s; display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 20px;
-        }
-        .card:hover .card-overlay { opacity: 1; }
-
-        .card-actions { display: flex; gap: 10px; justify-content: flex-end; }
-        .icon-btn {
-            width: 35px; height: 35px; border-radius: 50%; border: none;
-            background: rgba(255,255,255,0.2); backdrop-filter: blur(5px);
-            color: white; cursor: pointer; transition: 0.2s; display: grid; place-items: center;
-        }
-        .icon-btn:hover { background: white; color: black; }
-
-        /* --- 📱 LIGHTBOX MODAL --- */
+        /* --- 📱 FULLSCREEN MODAL --- */
         .modal {
             position: fixed; inset: 0; z-index: 5000;
-            background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(20px);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: 0.4s var(--ease);
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.3s var(--ease);
         }
         .modal.active { opacity: 1; pointer-events: all; }
 
-        .modal-inner {
-            width: 100%; max-width: 1200px; height: 90vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 20px; position: relative;
+        .modal-img-wrap {
+            max-width: 100%; max-height: 75vh; overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); margin-bottom: 30px;
         }
+        .modal-img-wrap img { display: block; max-width: 100%; max-height: 75vh; object-fit: contain; }
 
-        .modal-img-container {
-            position: relative; max-width: 95%; max-height: 80vh;
-            border-radius: 12px; overflow: hidden;
-            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
-        }
-        .modal-img-container img {
-            display: block; max-width: 100%; max-height: 80vh; object-fit: contain;
-        }
-
-        .modal-controls {
-            display: flex; gap: 15px; margin-top: 10px;
-        }
+        .modal-actions { display: flex; gap: 15px; }
         
         .pill-btn {
-            display: flex; align-items: center; gap: 10px;
-            padding: 14px 28px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.05); color: white; font-weight: 600;
-            cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1); color: white; font-weight: 600; font-size: 14px;
+            cursor: pointer; transition: 0.2s;
         }
-        .pill-btn:hover { background: white; color: black; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+        .pill-btn:hover { background: white; color: black; transform: scale(1.05); }
         .pill-btn i { font-size: 16px; }
 
         .close-modal {
-            position: absolute; top: 20px; right: 30px; font-size: 30px; color: white;
-            cursor: pointer; opacity: 0.5; transition: 0.3s; z-index: 10;
+            position: absolute; top: 25px; right: 25px; font-size: 28px; color: white;
+            cursor: pointer; opacity: 0.6; transition: 0.2s; padding: 10px;
         }
         .close-modal:hover { opacity: 1; transform: rotate(90deg); }
 
         /* --- 🔔 TOAST NOTIFICATIONS --- */
-        #toast-container {
+        #toast-box {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; gap: 10px; z-index: 6000;
+            display: flex; flex-direction: column; gap: 10px; z-index: 6000; width: max-content;
         }
         .toast {
-            background: rgba(20, 20, 20, 0.95); border: 1px solid var(--border);
-            color: white; padding: 12px 24px; border-radius: 50px;
+            background: #222; border: 1px solid var(--border);
+            color: white; padding: 12px 20px; border-radius: 50px;
             display: flex; align-items: center; gap: 10px;
-            font-size: 13px; font-weight: 600; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            animation: slideUp 0.4s var(--ease) forwards;
+            font-size: 13px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideUp 0.3s var(--ease) forwards;
         }
         .toast i { color: var(--gold); }
-        .toast.success i { color: #4CAF50; }
-        .toast.error i { color: #ff4757; }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 🔄 LOADER --- */
+        /* --- 🌀 LOADING SPINNER --- */
         .bottom-loader {
             width: 100%; padding: 40px; display: flex; justify-content: center;
             opacity: 0; transition: 0.3s;
         }
         .bottom-loader.show { opacity: 1; }
         .spinner {
-            width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
+            width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.1);
             border-top-color: var(--gold); border-radius: 50%;
             animation: spin 0.8s infinite linear;
         }
@@ -265,25 +216,25 @@
         </a>
     </header>
 
-    <div id="toast-container"></div>
+    <div id="toast-box"></div>
 
     <section class="hero">
-        <h1>Visuals from<br>the Aether</h1>
+        <h1>VISUALS FROM<br>THE AETHER</h1>
         <div class="made-by">Made by Faizan Ahmed</div>
         
         <div class="search-wrap">
-            <input type="text" class="search-input" id="search-input" placeholder="Search for visuals..." autocomplete="off">
-            <button class="search-btn" onclick="triggerSearch()"><i class="fas fa-arrow-right"></i></button>
+            <input type="text" class="search-input" id="search-input" placeholder="Search visuals..." autocomplete="off">
+            <button class="search-btn" onclick="triggerSearch()"><i class="fas fa-search"></i></button>
         </div>
 
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="filterTag('Random', this)">For You</button>
-            <button class="tab-btn" onclick="filterTag('Dark Nature 4k', this)">Nature</button>
-            <button class="tab-btn" onclick="filterTag('Imran Khan Aesthetic', this)">IK</button>
-            <button class="tab-btn" onclick="filterTag('Cyberpunk City', this)">Cyberpunk</button>
-            <button class="tab-btn" onclick="filterTag('Islamic Geometric Art', this)">Islamic</button>
-            <button class="tab-btn" onclick="filterTag('Supercars Dark', this)">Automotive</button>
-            <button class="tab-btn" onclick="filterTag('Abstract Neon', this)">Abstract</button>
+        <div class="tabs-scroll">
+            <button class="tab-btn active" onclick="filterTag('Random Aesthetic', this)">For You</button>
+            <button class="tab-btn" onclick="filterTag('Dark Nature 8k', this)">Nature</button>
+            <button class="tab-btn" onclick="filterTag('Imran Khan Aesthetic', this)">Imran Khan</button>
+            <button class="tab-btn" onclick="filterTag('Cyberpunk City', this)">Neon</button>
+            <button class="tab-btn" onclick="filterTag('Islamic Architecture', this)">Islamic</button>
+            <button class="tab-btn" onclick="filterTag('JDM Cars Wallpaper', this)">Cars</button>
+            <button class="tab-btn" onclick="filterTag('Black and White Art', this)">Abstract</button>
         </div>
     </section>
 
@@ -296,28 +247,28 @@
     <!-- MODAL -->
     <div class="modal" id="modal">
         <div class="close-modal" onclick="closeModal()">&times;</div>
-        <div class="modal-inner">
-            <div class="modal-img-container">
-                <img id="modal-img" src="" alt="Full View">
-            </div>
-            <div class="modal-controls">
-                <button class="pill-btn" id="dl-btn" onclick="downloadImage()">
-                    <i class="fas fa-download"></i> Save
-                </button>
-                <button class="pill-btn" id="share-btn" onclick="shareImage()">
-                    <i class="fas fa-share-nodes"></i> Share
-                </button>
-            </div>
+        
+        <div class="modal-img-wrap">
+            <img id="modal-img" src="" alt="Full View">
+        </div>
+        
+        <div class="modal-actions">
+            <button class="pill-btn" id="dl-btn" onclick="downloadImage()">
+                <i class="fas fa-download"></i> Save
+            </button>
+            <button class="pill-btn" id="share-btn" onclick="shareImage()">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURATION ---
+        // --- CORE SETTINGS ---
         const API_BASE = "https://api.xyro.site/search/pinterest?q=";
         const grid = document.getElementById('grid');
         const loader = document.getElementById('loader');
         
-        let currentQuery = "Aesthetic Wallpapers 4k"; // Default
+        let currentQuery = "Aesthetic Wallpapers 4k";
         let isFetching = false;
         let currentModalUrl = "";
 
@@ -327,41 +278,40 @@
             setupInfiniteScroll();
         };
 
-        // --- 1. IMAGE FETCHING LOGIC ---
+        // --- 1. SMART IMAGE ENGINE ---
         async function fetchImages(query, isAppend = false) {
             if (isFetching) return;
             isFetching = true;
             loader.classList.add('show');
 
-            if (!isAppend) grid.innerHTML = ''; // Clear grid if new search
+            if (!isAppend) grid.innerHTML = ''; 
 
             try {
-                // Add random parameter to keep scroll fresh
-                const randomPage = Math.floor(Math.random() * 5) + 1;
-                const finalQuery = isAppend ? `${query} aesthetic ${randomPage}` : query;
+                // Randomize query slightly to prevent duplicates on scroll
+                const randomPage = Math.floor(Math.random() * 10) + 1;
+                const finalQuery = isAppend ? `${query} ${randomPage}` : query;
                 
                 const response = await fetch(API_BASE + encodeURIComponent(finalQuery));
                 const data = await response.json();
                 
                 let images = [];
-                // Handle different API response structures
                 if (Array.isArray(data)) images = data;
                 else if (data.data) images = data.data;
                 else if (data.result) images = data.result;
 
                 const validUrls = images
                     .map(x => x.image || x.media || x.url || x.display_url || x)
-                    .filter(u => typeof u === 'string' && u.startsWith('http')); // Filter valid links
+                    .filter(u => typeof u === 'string' && u.startsWith('http'));
 
                 if (validUrls.length === 0 && !isAppend) {
-                    grid.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:50px; color:#555;">No visuals found.</div>`;
+                    showToast("No results found.", "error");
                 }
 
                 renderGrid(validUrls);
 
             } catch (error) {
                 console.error("Fetch Error:", error);
-                if(!isAppend) showToast("Could not load visuals. Check connection.", "error");
+                if(!isAppend) showToast("Check your internet connection.", "error");
             } finally {
                 isFetching = false;
                 loader.classList.remove('show');
@@ -369,25 +319,17 @@
         }
 
         function renderGrid(urls) {
-            // Shuffle images for a random look
-            urls.sort(() => Math.random() - 0.5);
+            urls.sort(() => Math.random() - 0.5); // Shuffle
 
             urls.forEach((url, i) => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-overlay">
-                        <div class="card-actions">
-                            <button class="icon-btn" onclick="event.stopPropagation(); showToast('Saved to Collection', 'success')"><i class="fas fa-bookmark"></i></button>
-                        </div>
-                    </div>
-                    <img src="${url}" loading="lazy" alt="Visual">
-                `;
+                card.innerHTML = `<img src="${url}" loading="lazy" alt="Visual">`;
                 card.onclick = () => openModal(url);
                 grid.appendChild(card);
 
-                // Staggered Animation
-                setTimeout(() => card.classList.add('reveal'), i * 100);
+                // Waterfall animation effect
+                setTimeout(() => card.classList.add('reveal'), i * 80);
             });
         }
 
@@ -395,14 +337,14 @@
         function setupInfiniteScroll() {
             window.addEventListener('scroll', () => {
                 const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-                // If near bottom of page
+                // Load more when user is 300px away from bottom
                 if (scrollTop + clientHeight >= scrollHeight - 300) {
                     fetchImages(currentQuery, true);
                 }
             });
         }
 
-        // --- 3. SEARCH & TABS ---
+        // --- 3. INTERACTIVE SEARCH ---
         function triggerSearch() {
             const val = document.getElementById('search-input').value;
             if (val.trim()) {
@@ -417,24 +359,14 @@
         });
 
         function filterTag(tag, btnElement) {
-            // Update Active State
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
-            
-            // Update Search Input visual only
-            document.getElementById('search-input').value = tag === 'Random' ? '' : tag;
-            
-            // Logic
-            if(tag === 'Random') {
-                const topics = ['Cyberpunk', 'Nature', 'Dark Art', 'Architecture', 'Space'];
-                currentQuery = topics[Math.floor(Math.random()*topics.length)];
-            } else {
-                currentQuery = tag;
-            }
-            fetchImages(currentQuery);
+            document.getElementById('search-input').value = tag === 'Random Aesthetic' ? '' : tag;
+            currentQuery = tag;
+            fetchImages(tag);
         }
 
-        // --- 4. MODAL LOGIC ---
+        // --- 4. MODAL SYSTEM ---
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
 
@@ -442,23 +374,23 @@
             currentModalUrl = url;
             modalImg.src = url;
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            document.body.style.overflow = 'hidden'; // Lock scroll
         }
 
         function closeModal() {
             modal.classList.remove('active');
-            document.body.style.overflow = '';
+            document.body.style.overflow = ''; // Unlock scroll
         }
 
-        // --- 5. DOWNLOAD (With Proxy Fix) ---
+        // --- 5. DOWNLOAD (Bypass Security) ---
         async function downloadImage() {
             const btn = document.getElementById('dl-btn');
-            const originalContent = btn.innerHTML;
+            const originalText = btn.innerHTML;
             
-            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Processing`;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
             
             try {
-                // Use CORS Proxy to bypass browser block
+                // Use CORS Proxy to get the raw image data
                 const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
                 const response = await fetch(proxyUrl);
                 const blob = await response.blob();
@@ -473,31 +405,31 @@
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(blobUrl);
                 
-                showToast("Download Started", "success");
+                showToast("Image Saved to Gallery!", "success");
             } catch (err) {
                 console.error(err);
-                showToast("Direct download failed. Opening tab...", "error");
+                showToast("Auto-save failed. Opening image...", "error");
                 setTimeout(() => window.open(currentModalUrl, '_blank'), 1000);
             } finally {
-                btn.innerHTML = originalContent;
+                btn.innerHTML = originalText;
             }
         }
 
-        // --- 6. SHARE (Native + File Support) ---
+        // --- 6. SHARE (WhatsApp/Native) ---
         async function shareImage() {
             const btn = document.getElementById('share-btn');
-            const originalContent = btn.innerHTML;
+            const originalText = btn.innerHTML;
             
             if (!navigator.share) {
                 navigator.clipboard.writeText(currentModalUrl);
-                showToast("Link Copied to Clipboard", "success");
+                showToast("Link Copied!", "success");
                 return;
             }
 
-            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i>`;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading...`;
 
             try {
-                // Try fetching blob to share actual file
+                // Fetch image to share as file
                 const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
                 const response = await fetch(proxyUrl);
                 const blob = await response.blob();
@@ -513,7 +445,7 @@
                     throw new Error("File share not supported");
                 }
             } catch (err) {
-                // Fallback to URL sharing
+                // Fallback to Link Share
                 try {
                     await navigator.share({
                         title: 'Galary Visual',
@@ -523,32 +455,30 @@
                     console.log("Share cancelled");
                 }
             } finally {
-                btn.innerHTML = originalContent;
+                btn.innerHTML = originalText;
             }
         }
 
-        // --- 7. TOAST NOTIFICATION SYSTEM ---
+        // --- 7. TOAST NOTIFICATIONS ---
         function showToast(msg, type = 'normal') {
-            const container = document.getElementById('toast-container');
+            const box = document.getElementById('toast-box');
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
+            toast.className = 'toast';
             
             let icon = 'fa-info-circle';
             if(type === 'success') icon = 'fa-check-circle';
-            if(type === 'error') icon = 'fa-exclamation-triangle';
+            if(type === 'error') icon = 'fa-triangle-exclamation';
 
             toast.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
-            container.appendChild(toast);
+            box.appendChild(toast);
 
-            // Remove after 3 seconds
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateY(20px)';
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
 
-        // --- HEADER SCROLL EFFECT ---
+        // --- HIDE HEADER ON SCROLL ---
         let lastScroll = 0;
         window.addEventListener('scroll', () => {
             const current = window.pageYOffset;
