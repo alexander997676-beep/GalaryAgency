@@ -78,7 +78,7 @@
             text-transform: uppercase; letter-spacing: 2px;
         }
 
-        /* NEW: Made By Text Style */
+        /* MADE BY TEXT */
         .made-by-text {
             font-family: var(--font-body);
             font-size: 11px;
@@ -217,7 +217,7 @@
     <section class="hero">
         <h1>VISUALS FROM THE AETHER</h1>
         
-        <!-- NEW TEXT ADDED HERE -->
+        <!-- Made By Text -->
         <div class="made-by-text">MADE BY FAIZAN AHMED</div>
         
         <div class="search-container">
@@ -245,7 +245,7 @@
                 <img id="modal-img" src="">
             </div>
             <div class="modal-actions">
-                <button class="action-btn" onclick="downloadImage()">
+                <button class="action-btn" id="dl-btn" onclick="downloadImage()">
                     <i class="fas fa-download"></i> Download
                 </button>
                 <button class="action-btn" onclick="shareImage()">
@@ -312,7 +312,7 @@
                     card.className = 'card';
                     card.innerHTML = `
                         <div class="card-overlay">
-                            <button class="btn-save" onclick="event.stopPropagation(); alert('Saved!')">Save</button>
+                            <button class="btn-save" onclick="event.stopPropagation(); alert('Added to favorites (Simulated)')">Save</button>
                         </div>
                         <img src="${url}" loading="lazy" alt="Galary Content">
                     `;
@@ -322,7 +322,7 @@
                 });
             } catch (error) {
                 console.error(error);
-                grid.innerHTML = '<h3 style="text-align:center; color:#555; width:100%;">Could not load visuals.</h3>';
+                grid.innerHTML = '<h3 style="text-align:center; color:#555; width:100%;">Could not load visuals. API might be busy.</h3>';
             }
         }
 
@@ -339,8 +339,45 @@
             setTimeout(() => modal.style.display = 'none', 300);
         }
 
-        function downloadImage() { window.open(currentModalUrl, '_blank'); }
-        function shareImage() { navigator.clipboard.writeText(currentModalUrl); alert('Link Copied to Clipboard!'); }
+        // --- NEW UPDATED DOWNLOAD FUNCTION ---
+        async function downloadImage() {
+            const btn = document.getElementById("dl-btn");
+            const originalText = btn.innerHTML;
+            
+            try {
+                // Change text to show process
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+                
+                // Fetch the image as a blob
+                const response = await fetch(currentModalUrl);
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                // Create invisible link to force download
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = `Galary-Aether-${Date.now()}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(blobUrl);
+                
+            } catch (error) {
+                console.error("Download failed:", error);
+                // Fallback for security errors (CORS)
+                alert("Direct download blocked by browser. Opening in new tab...");
+                window.open(currentModalUrl, '_blank');
+            } finally {
+                btn.innerHTML = originalText;
+            }
+        }
+
+        function shareImage() { 
+            navigator.clipboard.writeText(currentModalUrl); 
+            alert('Link Copied to Clipboard!'); 
+        }
 
         document.getElementById('search-input').addEventListener('keypress', (e) => {
             if(e.key === 'Enter') triggerSearch();
