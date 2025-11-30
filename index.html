@@ -312,7 +312,7 @@
                     card.className = 'card';
                     card.innerHTML = `
                         <div class="card-overlay">
-                            <button class="btn-save" onclick="event.stopPropagation(); alert('Added to favorites (Simulated)')">Save</button>
+                            <button class="btn-save" onclick="event.stopPropagation(); alert('Added to favorites')">Save</button>
                         </div>
                         <img src="${url}" loading="lazy" alt="Galary Content">
                     `;
@@ -339,35 +339,38 @@
             setTimeout(() => modal.style.display = 'none', 300);
         }
 
-        // --- NEW UPDATED DOWNLOAD FUNCTION ---
+        // --- BYPASS SECURITY FOR DOWNLOAD (FIXED) ---
         async function downloadImage() {
             const btn = document.getElementById("dl-btn");
             const originalText = btn.innerHTML;
             
             try {
-                // Change text to show process
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
                 
-                // Fetch the image as a blob
-                const response = await fetch(currentModalUrl);
+                // Use a CORS Proxy to trick the browser
+                // Hum image link ko proxy ke through mangwa rahe hain
+                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
+                
+                const response = await fetch(proxyUrl);
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
                 
-                // Create invisible link to force download
+                // Create invisible link
                 const link = document.createElement('a');
                 link.href = blobUrl;
-                link.download = `Galary-Aether-${Date.now()}.jpg`;
+                link.download = `Galary-${Date.now()}.jpg`;
                 document.body.appendChild(link);
+                
+                // Force click
                 link.click();
                 
-                // Cleanup
+                // Clean up
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(blobUrl);
                 
             } catch (error) {
-                console.error("Download failed:", error);
-                // Fallback for security errors (CORS)
-                alert("Direct download blocked by browser. Opening in new tab...");
+                console.error("Proxy failed:", error);
+                alert("Download start nahi ho saka. Image new tab me khul rahi hai, wahan se long-press karke save karein.");
                 window.open(currentModalUrl, '_blank');
             } finally {
                 btn.innerHTML = originalText;
