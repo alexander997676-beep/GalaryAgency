@@ -248,7 +248,7 @@
                 <button class="action-btn" id="dl-btn" onclick="downloadImage()">
                     <i class="fas fa-download"></i> Download
                 </button>
-                <button class="action-btn" onclick="shareImage()">
+                <button class="action-btn" id="share-btn" onclick="shareImage()">
                     <i class="fas fa-share-alt"></i> Share
                 </button>
             </div>
@@ -339,7 +339,7 @@
             setTimeout(() => modal.style.display = 'none', 300);
         }
 
-        // --- BYPASS SECURITY FOR DOWNLOAD (FIXED) ---
+        // --- DOWNLOAD FUNCTION (With Proxy) ---
         async function downloadImage() {
             const btn = document.getElementById("dl-btn");
             const originalText = btn.innerHTML;
@@ -347,39 +347,78 @@
             try {
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
                 
-                // Use a CORS Proxy to trick the browser
-                // Hum image link ko proxy ke through mangwa rahe hain
                 const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
-                
                 const response = await fetch(proxyUrl);
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
                 
-                // Create invisible link
                 const link = document.createElement('a');
                 link.href = blobUrl;
                 link.download = `Galary-${Date.now()}.jpg`;
                 document.body.appendChild(link);
-                
-                // Force click
                 link.click();
                 
-                // Clean up
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(blobUrl);
                 
             } catch (error) {
-                console.error("Proxy failed:", error);
-                alert("Download start nahi ho saka. Image new tab me khul rahi hai, wahan se long-press karke save karein.");
+                console.error("Download failed:", error);
+                alert("Download blocked. Opening in new tab...");
                 window.open(currentModalUrl, '_blank');
             } finally {
                 btn.innerHTML = originalText;
             }
         }
 
-        function shareImage() { 
-            navigator.clipboard.writeText(currentModalUrl); 
-            alert('Link Copied to Clipboard!'); 
+        // --- NEW SHARE FUNCTION (WhatsApp/Apps) ---
+        async function shareImage() {
+            const btn = document.getElementById("share-btn");
+            const originalText = btn.innerHTML;
+
+            // Agar browser native sharing support nahi karta
+            if (!navigator.share) {
+                navigator.clipboard.writeText(currentModalUrl);
+                alert('Sharing not supported on this device. Link copied!');
+                return;
+            }
+
+            try {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+
+                // Step 1: Image ko fetch karo taake file ban sake
+                const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(currentModalUrl);
+                const response = await fetch(proxyUrl);
+                const blob = await response.blob();
+                
+                // Step 2: Blob ko File object mein convert karo
+                const file = new File([blob], `image-${Date.now()}.jpg`, { type: blob.type });
+
+                // Step 3: Check karo agar files share karna allow hai
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: 'Galary Visual',
+                        text: 'Check out this visual from Galary Agency!',
+                    });
+                } else {
+                    // Fallback: Agar file share nahi ho sakti, sirf Link share karo
+                    throw new Error("File sharing not supported");
+                }
+
+            } catch (error) {
+                console.log("File sharing failed, trying URL share...", error);
+                try {
+                    await navigator.share({
+                        title: 'Galary Visual',
+                        text: 'Check out this visual from Galary Agency!',
+                        url: currentModalUrl
+                    });
+                } catch (urlError) {
+                    console.log("Share canceled or failed");
+                }
+            } finally {
+                btn.innerHTML = originalText;
+            }
         }
 
         document.getElementById('search-input').addEventListener('keypress', (e) => {
