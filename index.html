@@ -4,37 +4,381 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#050505">
-    <title>Galary Agency | Aether</title>
+    <title>Galary Agency | Universal</title>
     
     <!-- Favicon -->
     <link rel="icon" href="https://n.f-a-k.workers.dev/geminigeneratedimage5497qx5497qx54972.png" type="image/png">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* --- 🌑 AETHER VARIABLES --- */
+        /* --- 🌑 VARIABLES --- */
         :root {
-            --bg: #030303;
-            --surface: #0f0f0f;
-            --text-main: #f0f0f0;
-            --text-muted: #666;
-            --accent: #FFD700;
-            --accent-glow: rgba(255, 215, 0, 0.4);
+            --bg: #050505;
+            --surface: #121212;
+            --text-main: #e0e0e0;
+            --text-muted: #888;
+            --accent: #E60023; /* Brand Red/Pinkish */
+            --gold: #FFD700;
             --border: rgba(255, 255, 255, 0.08);
             --font-head: 'Cinzel', serif;
-            --font-body: 'Space Grotesk', sans-serif;
+            --font-body: 'Manrope', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             background-color: var(--bg); color: var(--text-main);
             font-family: var(--font-body); overflow-x: hidden;
             min-height: 100vh;
         }
+
+        /* --- 🎞️ FILM TEXTURE (Subtle) --- */
+        .texture {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.04; pointer-events: none; z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        header.hide { transform: translateY(-100%); }
+
+        .brand { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .brand img {
+            width: 45px; height: 45px; border-radius: 50%; object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .brand-text { display: flex; flex-direction: column; line-height: 1; }
+        .txt-main { font-family: var(--font-body); font-weight: 800; font-size: 20px; color: #fff; letter-spacing: 1px; }
+        .txt-sub { 
+            font-family: var(--font-head); font-size: 12px; letter-spacing: 3px; 
+            color: var(--gold); margin-top: 3px;
+        }
+
+        /* --- SEARCH HERO --- */
+        .hero {
+            padding: 140px 20px 40px; text-align: center;
+            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05), transparent 70%);
+        }
+        .hero h1 {
+            font-family: var(--font-head); font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 30px; line-height: 1;
+            background: linear-gradient(to bottom, #fff, #777);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .search-container {
+            position: relative; width: 100%; max-width: 600px; margin: 0 auto;
+        }
+        .search-input {
+            width: 100%; padding: 18px 30px; border-radius: 50px;
+            background: var(--surface); border: 1px solid var(--border);
+            color: white; font-size: 18px; font-family: var(--font-body);
+            transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .search-input:focus {
+            outline: none; border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        .search-btn {
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+            background: var(--text-main); color: var(--bg); border: none;
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            font-size: 18px; transition: 0.2s;
+        }
+        .search-btn:hover { transform: translateY(-50%) scale(1.1); background: var(--gold); }
+
+        /* Quick Tags */
+        .tags-row {
+            margin-top: 25px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+        }
+        .tag {
+            padding: 8px 16px; border: 1px solid var(--border); border-radius: 20px;
+            font-size: 12px; color: var(--text-muted); cursor: pointer; transition: 0.3s;
+        }
+        .tag:hover { color: var(--text-main); border-color: var(--text-main); background: rgba(255,255,255,0.05); }
+
+        /* --- GRID --- */
+        .grid {
+            column-count: 5; column-gap: 20px; padding: 0 40px 100px;
+            max-width: 1900px; margin: 0 auto;
+        }
+        @media (max-width: 1400px) { .grid { column-count: 4; } }
+        @media (max-width: 900px) { .grid { column-count: 3; padding: 0 20px 100px; } header { padding: 20px; } }
+        @media (max-width: 600px) { .grid { column-count: 2; column-gap: 10px; padding: 0 10px 100px; } }
+
+        .card {
+            break-inside: avoid; margin-bottom: 20px; position: relative;
+            background: var(--surface); border-radius: 12px; overflow: hidden;
+            opacity: 0; transform: translateY(30px); transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: zoom-in;
+        }
+        .card.visible { opacity: 1; transform: translateY(0); }
+
+        .card img {
+            width: 100%; display: block; transition: 0.5s; opacity: 0.9;
+        }
+        .card:hover img { transform: scale(1.05); opacity: 1; }
+
+        /* Overlay Buttons */
+        .card-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); opacity: 0; transition: 0.3s;
+            display: flex; justify-content: flex-end; padding: 15px;
+        }
+        .card:hover .card-overlay { opacity: 1; }
+
+        .btn-save {
+            background: var(--accent); color: white; border: none;
+            padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700;
+            cursor: pointer; height: fit-content;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 5000;
+            justify-content: center; align-items: center; opacity: 0; transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .modal.open { opacity: 1; }
+
+        .modal-content {
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+            max-width: 95%; max-height: 95%;
+        }
+        .modal-img-wrap {
+            max-height: 80vh; overflow: hidden; border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .modal-img-wrap img { max-height: 80vh; max-width: 100%; display: block; }
+        
+        .modal-actions { display: flex; gap: 15px; }
+        .action-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1);
+            color: white; padding: 12px 24px; border-radius: 30px; cursor: pointer;
+            transition: 0.2s; font-weight: 600; display: flex; align-items: center; gap: 8px;
+        }
+        .action-btn:hover { background: white; color: black; }
+
+        .close-modal {
+            position: absolute; top: 30px; right: 30px; font-size: 30px; color: white;
+            cursor: pointer; opacity: 0.7; transition: 0.2s;
+        }
+        .close-modal:hover { opacity: 1; transform: scale(1.1); }
+
+        /* Loader */
+        .loader {
+            margin: 40px auto; width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s infinite linear; display: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="texture"></div>
+
+    <header id="navbar">
+        <a href="#" class="brand" onclick="location.reload()">
+            <img src="https://n.f-a-k.workers.dev/geminigeneratedimage5497qx5497qx54972.png" alt="Logo">
+            <div class="brand-text">
+                <span class="txt-main">GALARY</span>
+                <span class="txt-sub">AGENCY</span>
+            </div>
+        </a>
+
+        <!-- Menu Icon / Credits -->
+        <div style="font-size: 11px; font-weight: 700; color: #555; letter-spacing: 1px;">
+            FAIZAN AHMED
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Discover Everything.</h1>
+        <div class="search-container">
+            <input type="text" class="search-input" id="search-input" placeholder="Search visuals (e.g., Space, Cars, Art)...">
+            <button class="search-btn" onclick="triggerSearch()"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <!-- Mixed Tags for Global Appeal -->
+        <div class="tags-row">
+            <span class="tag" onclick="search('Random Aesthetic')">Random</span>
+            <span class="tag" onclick="search('Nature 4k')">Nature</span>
+            <span class="tag" onclick="search('Imran Khan')">Imran Khan</span>
+            <span class="tag" onclick="search('Cyberpunk')">Tech</span>
+            <span class="tag" onclick="search('Islamic Art')">Islamic</span>
+            <span class="tag" onclick="search('Luxury Cars')">Cars</span>
+        </div>
+    </section>
+
+    <div class="grid" id="grid"></div>
+    <div class="loader" id="loader"></div>
+
+    <!-- Lightbox Modal -->
+    <div class="modal" id="modal">
+        <div class="close-modal" onclick="closeModal()">&times;</div>
+        <div class="modal-content">
+            <div class="modal-img-wrap">
+                <img id="modal-img" src="">
+            </div>
+            <div class="modal-actions">
+                <button class="action-btn" onclick="downloadImage()">
+                    <i class="fas fa-download"></i> Download
+                </button>
+                <button class="action-btn" onclick="shareImage()">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIC ---
+        const API_URL = "https://api.xyro.site/search/pinterest?q=";
+        const grid = document.getElementById('grid');
+        const loader = document.getElementById('loader');
+        let currentModalUrl = "";
+
+        window.onload = loadGlobalMix;
+
+        // 1. GLOBAL MIX LOAD (Not just specific topics)
+        async function loadGlobalMix() {
+            grid.innerHTML = '';
+            loader.style.display = 'block';
+
+            // We use a variety of keywords to simulate "Sab Kuch"
+            const mixTopics = [
+                'Cinematic Portrait', 
+                'Futuristic Architecture', 
+                'Imran Khan Aesthetic', 
+                'Nature 8k',
+                'Neon Street',
+                'Islamic Calligraphy',
+                'Abstract Art'
+            ];
+            
+            await fetchAndRender(mixTopics);
+            loader.style.display = 'none';
+        }
+
+        // 2. SEARCH FUNCTION
+        async function search(query) {
+            grid.innerHTML = '';
+            document.getElementById('search-input').value = query;
+            loader.style.display = 'block';
+            await fetchAndRender([query]);
+            loader.style.display = 'none';
+        }
+
+        function triggerSearch() {
+            const val = document.getElementById('search-input').value;
+            if(val) search(val);
+        }
+
+        // 3. FETCHING DATA
+        async function fetchAndRender(queries) {
+            try {
+                // Fetch all topics in parallel
+                const promises = queries.map(q => fetch(API_URL + encodeURIComponent(q)).then(r => r.json()));
+                const results = await Promise.all(promises);
+                
+                let allImages = [];
+                results.forEach(data => {
+                    let items = [];
+                    if(Array.isArray(data)) items = data;
+                    else if(data.data) items = data.data;
+                    else if(data.result) items = data.result;
+                    
+                    // Filter valid images
+                    const validUrls = items.map(x => x.image || x.media || x.url || x.display_url || x)
+                                           .filter(u => typeof u === 'string' && u.startsWith('http'));
+                    
+                    allImages.push(...validUrls);
+                });
+
+                // Shuffle for random look
+                allImages = allImages.sort(() => Math.random() - 0.5);
+
+                // Render
+                allImages.forEach((url, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-overlay">
+                            <button class="btn-save" onclick="event.stopPropagation(); alert('Saved!')">Save</button>
+                        </div>
+                        <img src="${url}" loading="lazy" alt="Galary Content">
+                    `;
+                    card.onclick = () => openModal(url);
+                    grid.appendChild(card);
+
+                    // Reveal Animation
+                    setTimeout(() => card.classList.add('visible'), index * 50);
+                });
+
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<h3 style="text-align:center; color:#555; width:100%;">Could not load visuals.</h3>';
+            }
+        }
+
+        // 4. MODAL
+        const modal = document.getElementById('modal');
+        function openModal(url) {
+            currentModalUrl = url;
+            document.getElementById('modal-img').src = url;
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('open'), 10);
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        function downloadImage() {
+            window.open(currentModalUrl, '_blank');
+        }
+        
+        function shareImage() {
+            navigator.clipboard.writeText(currentModalUrl);
+            alert('Link Copied to Clipboard!');
+        }
+
+        // Enter Key Listener
+        document.getElementById('search-input').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') triggerSearch();
+        });
+
+        // Hide Header on Scroll
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const current = window.pageYOffset;
+            const header = document.getElementById('navbar');
+            if (current > lastScroll && current > 100) {
+                header.classList.add('hide');
+            } else {
+                header.classList.remove('hide');
+            }
+            lastScroll = current;
+        });
+
+    </script>
+</body>
+</html>        }
 
         /* --- 🎞️ FILM GRAIN TEXTURE --- */
         .noise-overlay {
