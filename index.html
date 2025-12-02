@@ -195,6 +195,8 @@
             width: 95vw; height: 90vh; background: #080808;
             border: 1px solid var(--border); border-radius: 20px;
             display: flex; overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            /* Smooth transition for layout changes */
+            transition: all 0.5s var(--ease-out);
         }
 
         /* Preview Area */
@@ -203,18 +205,24 @@
             background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
+            transition: all 0.5s var(--ease-out);
         }
         .img-wrapper {
             max-width: 90%; max-height: 90%;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
-        #preview-img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+        #preview-img { 
+            display: block; max-width: 100%; max-height: 100%; object-fit: contain;
+            cursor: zoom-in; /* Indicates it's clickable */
+        }
 
         /* Controls Sidebar */
         .studio-panel {
             width: 360px; background: #0c0c0c; border-left: 1px solid var(--border);
             display: flex; flex-direction: column;
+            transition: all 0.5s var(--ease-out);
+            opacity: 1;
         }
         .panel-header {
             padding: 25px; border-bottom: 1px solid var(--border);
@@ -307,30 +315,45 @@
             color: transparent;
             -webkit-text-stroke: 1px rgba(255,255,255,0.5);
             animation: fillLogo 2s forwards ease-in-out;
-            
-            /* Layout for stacking */
             display: flex;
             flex-direction: column;
             align-items: center;
             line-height: 1;
         }
-        
-        /* The smaller AGENCY part */
         .splash-logo span {
-            font-family: var(--font-ui);
-            font-size: 14px;
-            letter-spacing: 12px; /* Widen spacing to fit aesthetically under GALLERY */
-            margin-left: 12px; /* Offset slightly to center the visual weight */
-            margin-top: 10px;
-            color: var(--accent-gold);
-            -webkit-text-stroke: 0;
-            -webkit-text-fill-color: var(--accent-gold) !important;
-            font-weight: 500;
-            opacity: 0;
-            animation: fadeUp 1s ease-out 0.5s forwards;
+            font-family: var(--font-ui); font-size: 14px; letter-spacing: 12px; 
+            margin-left: 12px; margin-top: 10px; color: var(--accent-gold);
+            -webkit-text-stroke: 0; -webkit-text-fill-color: var(--accent-gold) !important;
+            font-weight: 500; opacity: 0; animation: fadeUp 1s ease-out 0.5s forwards;
+        }
+        @keyframes fillLogo { 0% { -webkit-text-fill-color: transparent; } 100% { -webkit-text-fill-color: white; } }
+
+        /* --- 🔭 MAXIMIZE / FULL VIEW STYLES (New Feature) --- */
+        .studio-container.maximize .studio-panel {
+            width: 0; padding: 0; opacity: 0; pointer-events: none; border: none;
+            overflow: hidden;
+        }
+        .studio-container.maximize .studio-canvas {
+            flex: 100%; /* Takes full width */
+            background: #000;
+        }
+        .studio-container.maximize .img-wrapper {
+            max-width: 98%; max-height: 98%;
+            box-shadow: none; /* Cleaner look when maximized */
+        }
+        .studio-container.maximize #preview-img {
+            cursor: zoom-out; /* Change cursor to indicate you can click to close */
         }
 
-        @keyframes fillLogo { 0% { -webkit-text-fill-color: transparent; } 100% { -webkit-text-fill-color: white; } }
+        /* Mobile Maximize Fix */
+        @media (max-width: 900px) {
+            .studio-container.maximize .studio-panel {
+                height: 0; width: 100%; border-top: none;
+            }
+            .studio-container.maximize .studio-canvas {
+                height: 100%;
+            }
+        }
 
     </style>
 </head>
@@ -394,7 +417,8 @@
         <div class="studio-container">
             <div class="studio-canvas">
                 <div class="img-wrapper">
-                    <img id="preview-img" crossorigin="anonymous" src="">
+                    <!-- Added onclick toggleMaximize here -->
+                    <img id="preview-img" crossorigin="anonymous" src="" onclick="toggleMaximize()">
                 </div>
             </div>
             <div class="studio-panel">
@@ -547,9 +571,23 @@
             document.body.style.overflow = 'hidden';
         }
 
+        // Modified closeStudio to reset zoom state
         function closeStudio() {
             DOM.studio.classList.remove('active');
+            // Remove Maximize state when closing so next image opens normally
+            document.querySelector('.studio-container').classList.remove('maximize');
             document.body.style.overflow = '';
+        }
+
+        // --- 🔭 MAXIMIZE / ZOOM FUNCTION ---
+        function toggleMaximize() {
+            const container = document.querySelector('.studio-container');
+            container.classList.toggle('maximize');
+            
+            // Optional: Show toast message on first click
+            if(container.classList.contains('maximize')){
+                showToast("Full View Mode");
+            }
         }
 
         // Filter Handling
