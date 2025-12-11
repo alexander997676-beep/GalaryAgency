@@ -510,9 +510,11 @@
 
             if (!append) DOM.grid.innerHTML = '';
             
-            // Randomize page for variety
+            // Randomize page for variety (Used as part of search query to shuffle results)
             const apiPage = Math.floor(Math.random() * 20) + 1;
-            const url = `https://api.xyro.site/search/pinterest?q=${encodeURIComponent(state.query)}%20${apiPage}`;
+            
+            // --- ⚡ UPDATED API ENDPOINT ---
+            const url = `https://pinterest-search.apis-bj-devs.workers.dev/?search=${encodeURIComponent(state.query)}%20${apiPage}`;
 
             try {
                 const res = await fetch(url);
@@ -539,9 +541,22 @@
             DOM.loader.style.opacity = 0;
         }
 
+        // --- ⚡ UPDATED EXTRACTION LOGIC ---
         function extractImages(data) {
-            const list = data.data || data.result || data || [];
-            return list.map(item => item.image || item.media || item.url || item).filter(u => typeof u === 'string' && u.startsWith('http'));
+            // Handle different API response structures (Arrays vs Objects)
+            let list = Array.isArray(data) ? data : (data.result || data.data || []);
+            
+            return list.map(item => {
+                // If the item is just a string (URL)
+                if (typeof item === 'string') return item;
+                // If the item is an object, look for image keys
+                if (item.image) return item.image;
+                if (item.media) return item.media;
+                if (item.url) return item.url;
+                // Deep nested pinterest structure check
+                if (item.images && item.images.orig && item.images.orig.url) return item.images.orig.url;
+                return null;
+            }).filter(u => u && typeof u === 'string' && u.startsWith('http'));
         }
 
         function createCard(url) {
