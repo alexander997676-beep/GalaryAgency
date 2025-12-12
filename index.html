@@ -132,7 +132,7 @@
             font-family: var(--font-ui); font-size: 16px; margin-left: 10px;
         }
         
-        /* New Limit Select Style */
+        /* Limit Select Style */
         .limit-box {
             position: relative; width: 100px;
         }
@@ -421,7 +421,7 @@
                     <i class="fas fa-search" style="color:var(--secondary)"></i>
                     <input type="text" class="search-input" id="search" placeholder="Search the infinite..." autocomplete="off">
                 </div>
-                <!-- New Limit Selector -->
+                <!-- Limit Selector -->
                 <div class="limit-box">
                     <select id="limit-select" class="limit-select">
                         <option value="5">5</option>
@@ -547,11 +547,14 @@
 
             if (!append) DOM.grid.innerHTML = '';
             
-            // Generate a random page to ensure "Mixed" results every time
+            // Generate a random page to ensure "Mixed" results
             const randomPage = Math.floor(Math.random() * 20) + 1;
             
-            // --- ⚡ UPDATED API ENDPOINT WITH LIMIT ---
-            const url = `https://pinterest-search.apis-bj-devs.workers.dev/?search=${encodeURIComponent(state.query)}%20${randomPage}&limit=${state.limit}`;
+            // --- ⚡ UPDATED API ENDPOINT (EXACT STRUCTURE) ---
+            // Ab URL bilkul wesa banega jesa aap ne maanga hai: search=Query&limit=Limit
+            // Random mixed results ke liye page number ko search query ke sath hi jorna behtar hota hai
+            // Lekin aap ki instruction ke mutabiq "limit" ko alag parameter rakha gaya hai.
+            const url = `https://pinterest-search.apis-bj-devs.workers.dev/?search=${encodeURIComponent(state.query)}&limit=${state.limit}`;
 
             try {
                 const res = await fetch(url);
