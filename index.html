@@ -510,11 +510,11 @@
 
             if (!append) DOM.grid.innerHTML = '';
             
-            // Randomize page for variety (Used as part of search query to shuffle results)
-            const apiPage = Math.floor(Math.random() * 20) + 1;
+            // Generate a random page to ensure "Mixed" results every time
+            const randomPage = Math.floor(Math.random() * 20) + 1;
             
             // --- ⚡ UPDATED API ENDPOINT ---
-            const url = `https://pinterest-search.apis-bj-devs.workers.dev/?search=${encodeURIComponent(state.query)}%20${apiPage}`;
+            const url = `https://pinterest-search.apis-bj-devs.workers.dev/?search=${encodeURIComponent(state.query)}%20${randomPage}`;
 
             try {
                 const res = await fetch(url);
@@ -522,7 +522,8 @@
                 let images = extractImages(data);
                 
                 if(images.length === 0 && !append) {
-                    DOM.grid.innerHTML = `<div style="text-align:center; grid-column:span 5; padding:40px; color:#666">No signals found in the void.</div>`;
+                    // Fail silently or show very subtle message - "Lost connection" removed
+                    console.log("Stream empty");
                 }
 
                 images.forEach((imgUrl, index) => {
@@ -533,8 +534,9 @@
                 });
 
             } catch (err) {
-                console.error("Transmission Error:", err);
-                if(!append) DOM.grid.innerHTML = `<div style="text-align:center; grid-column:span 5; padding:40px; color:#666">Connection Lost.</div>`;
+                console.error("Signal weak:", err);
+                // "Lost connection" screen removed as requested.
+                // It will basically do nothing visibly, keeping the aesthetic clean.
             }
 
             state.loading = false;
