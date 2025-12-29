@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gallery Agency | Premium</title>
+    <title>Gallery Agency | Ultra Fast</title>
     
     <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,158 +33,147 @@
             position: fixed; inset: 0; background: #000;
             z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
         .intro-overlay.fade-out { opacity: 0; visibility: hidden; }
         
-        /* Main Title */
         .intro-logo {
-            font-family: 'Cinzel', serif; font-size: 2.8rem; font-weight: 800;
+            font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 800;
             background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            opacity: 0; animation: zoomIn 1.5s forwards; letter-spacing: 2px; text-align: center;
+            opacity: 0; animation: zoomIn 1.2s forwards; letter-spacing: 2px; text-align: center;
             line-height: 1.2;
         }
         
-        /* Gold Line */
         .intro-line {
             width: 0; height: 2px; background: var(--gold); margin: 15px 0;
-            animation: lineExpand 1s forwards 0.8s;
+            animation: lineExpand 0.8s forwards 0.5s;
         }
 
-        /* DESIGNER NAME (New) */
         .intro-sub {
             font-family: 'Manrope', sans-serif;
-            color: var(--gold-solid);
-            font-size: 0.75rem;
-            letter-spacing: 4px; /* Wide spacing for luxury look */
-            font-weight: 600;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeUp 1s forwards 1.2s; /* Delays appearance */
-            text-align: center;
-            padding: 0 10px;
+            color: var(--gold-solid); font-size: 0.7rem; letter-spacing: 3px;
+            font-weight: 600; text-transform: uppercase;
+            opacity: 0; animation: fadeUp 0.8s forwards 1s;
+            text-align: center; padding: 0 10px;
         }
 
         /* --- NAVBAR --- */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 100;
-            padding: 20px 25px;
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(15px);
+            padding: 15px 20px;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .brand {
-            font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 800;
+            font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 800;
             background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             text-transform: uppercase; letter-spacing: 1px;
         }
 
         .status-badge {
-            font-size: 0.65rem; color: #000; background: var(--gold);
-            padding: 5px 12px; font-weight: bold; letter-spacing: 2px;
-            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 0);
+            font-size: 0.6rem; color: #000; background: var(--gold);
+            padding: 4px 10px; font-weight: bold; letter-spacing: 1px;
+            border-radius: 2px;
         }
 
-        /* --- HERO SECTION --- */
-        .hero { margin-top: 120px; padding: 0 20px; text-align: center; }
+        /* --- HERO --- */
+        .hero { margin-top: 100px; padding: 0 20px; text-align: center; }
         
         .search-container {
-            position: relative; max-width: 600px; margin: 0 auto 50px auto;
+            position: relative; max-width: 600px; margin: 0 auto 40px auto;
             border: 1px solid rgba(212, 175, 55, 0.5);
             background: rgba(255,255,255,0.03);
             display: flex; align-items: center;
-            padding: 5px; transition: 0.3s;
-        }
-        .search-container:focus-within {
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
-            border-color: var(--gold-solid);
+            padding: 5px; border-radius: 8px;
         }
 
         input {
-            flex: 1; background: transparent; border: none; padding: 15px;
-            color: #fff; font-size: 1.1rem; font-family: 'Manrope';
+            flex: 1; background: transparent; border: none; padding: 12px;
+            color: #fff; font-size: 1rem; font-family: 'Manrope';
         }
         .btn-search {
-            width: 50px; height: 50px; border: none;
-            background: var(--gold); color: #000; font-size: 1.2rem;
-            cursor: pointer; transition: 0.3s;
+            width: 45px; height: 45px; border: none; border-radius: 6px;
+            background: var(--gold); color: #000; font-size: 1.1rem;
+            cursor: pointer;
         }
 
         /* --- GALLERY --- */
         .gallery {
-            column-count: 2; column-gap: 15px; padding: 15px; max-width: 1400px; margin: 0 auto;
+            column-count: 2; column-gap: 10px; padding: 10px; max-width: 1400px; margin: 0 auto;
         }
         @media(min-width: 768px) { .gallery { column-count: 3; } }
 
         .card {
-            background: var(--card-bg); margin-bottom: 15px; break-inside: avoid;
-            position: relative; overflow: hidden;
+            background: var(--card-bg); margin-bottom: 10px; break-inside: avoid;
+            position: relative; overflow: hidden; border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.4s ease;
         }
-        .card:hover { border-color: var(--gold-solid); transform: translateY(-5px); }
 
-        .card img { width: 100%; display: block; opacity: 0; transition: opacity 0.6s; }
+        .card img { width: 100%; display: block; opacity: 0; transition: opacity 0.5s; }
         .card img.loaded { opacity: 1; }
 
+        /* Small download button on images */
         .dl-icon {
-            position: absolute; bottom: 10px; right: 10px;
-            width: 40px; height: 40px;
+            position: absolute; bottom: 8px; right: 8px;
+            width: 35px; height: 35px;
             background: rgba(0,0,0,0.8); border: 1px solid var(--gold-solid);
-            color: var(--gold-solid);
+            color: var(--gold-solid); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 10; font-size: 1rem;
+            cursor: pointer; z-index: 10; font-size: 0.9rem;
         }
+        .dl-icon:active { transform: scale(0.9); background: var(--gold); color: black; }
 
         /* --- LIGHTBOX --- */
         .lightbox {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.96);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
             z-index: 200; display: none;
             flex-direction: column; align-items: center; justify-content: center;
         }
-        .lightbox.active { display: flex; animation: fadeIn 0.3s; }
+        .lightbox.active { display: flex; animation: fadeIn 0.2s; }
 
         .lb-img-frame {
-            padding: 5px; background: var(--gold);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+            padding: 3px; background: var(--gold); border-radius: 8px;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
         }
-        .lb-img { max-width: 90vw; max-height: 65vh; display: block; }
+        .lb-img { max-width: 95vw; max-height: 60vh; display: block; border-radius: 6px; }
 
+        /* --- BIG DOWNLOAD BUTTON --- */
         .btn-premium-dl {
-            margin-top: 30px;
+            margin-top: 25px;
             background: var(--gold); color: black;
             font-family: 'Cinzel', serif; font-weight: 700;
-            padding: 15px 40px; border: none;
-            font-size: 1.1rem; cursor: pointer; letter-spacing: 2px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            padding: 15px 50px; border: none; border-radius: 50px;
+            font-size: 1rem; cursor: pointer; letter-spacing: 1px;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            display: flex; align-items: center; gap: 10px;
         }
-        .btn-premium-dl:active { transform: scale(0.95); }
+        .btn-premium-dl:active { transform: scale(0.95); background: white; }
 
         .close-lb {
-            position: absolute; top: 30px; right: 30px;
-            color: #666; font-size: 2.5rem; cursor: pointer;
+            position: absolute; top: 20px; right: 20px;
+            color: #888; font-size: 2rem; cursor: pointer;
         }
 
-        /* --- LOADER --- */
+        /* --- FAST LOADER OVERLAY --- */
         .dl-overlay {
-            position: fixed; inset: 0; background: black;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
             z-index: 500; display: none;
             flex-direction: column; align-items: center; justify-content: center;
         }
-        .gold-ring {
-            width: 60px; height: 60px;
-            border: 3px solid transparent; border-top: 3px solid #D4AF37;
-            border-radius: 50%; animation: spin 1s infinite linear;
+        .speed-spinner {
+            width: 50px; height: 50px;
+            border: 4px solid #333; border-top: 4px solid #D4AF37;
+            border-radius: 50%; animation: spin 0.6s infinite linear; /* Fast spin */
         }
+        .dl-status { margin-top: 15px; color: var(--gold-solid); font-family: 'Manrope'; font-weight: bold; }
 
-        /* Footer */
-        footer { margin-top: 50px; padding: 30px; text-align: center; border-top: 1px solid #222; }
-        .footer-text { font-family: 'Cinzel'; color: #555; font-size: 0.8rem; letter-spacing: 2px; }
+        footer { margin-top: 40px; padding: 30px; text-align: center; border-top: 1px solid #222; }
+        .footer-text { font-family: 'Cinzel'; color: #666; font-size: 0.7rem; letter-spacing: 2px; }
 
-        /* Animations */
         @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes lineExpand { from { width: 0; } to { width: 100px; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -195,36 +184,35 @@
 </head>
 <body>
 
-    <!-- 1. INTRO SPLASH SCREEN -->
+    <!-- SPLASH SCREEN -->
     <div class="intro-overlay" id="introScreen">
         <div class="intro-logo">GALLERY AGENCY</div>
         <div class="intro-line"></div>
         <div class="intro-sub">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
     </div>
 
-    <!-- 2. NAVBAR -->
+    <!-- NAVBAR -->
     <nav>
         <div class="brand">GALLERY AGENCY</div>
-        <div class="status-badge">PREMIUM</div>
+        <div class="status-badge">FAST PRO</div>
     </nav>
 
-    <!-- 3. SEARCH -->
+    <!-- SEARCH -->
     <div class="hero">
-        <h2 style="font-family:'Cinzel'; color:#ddd; margin-bottom:20px; font-weight:400;">Explore The Elite</h2>
         <div class="search-container">
-            <input type="text" id="queryInput" placeholder="Search (e.g. Luxury, Gold, Cars)...">
+            <input type="text" id="queryInput" placeholder="Search Wallpapers...">
             <button class="btn-search" onclick="runSearch()"><i class="fa-solid fa-search"></i></button>
         </div>
     </div>
 
-    <!-- 4. GALLERY -->
+    <!-- GALLERY -->
     <div id="gallery" class="gallery"></div>
 
     <footer>
         <div class="footer-text">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
     </footer>
 
-    <!-- 5. LIGHTBOX -->
+    <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox">
         <div class="close-lb" onclick="closeLightbox()">&times;</div>
         
@@ -233,14 +221,15 @@
         </div>
         
         <button class="btn-premium-dl" onclick="startDownload()">
-            DOWNLOAD IMAGE
+            <i class="fa-solid fa-bolt"></i> FAST DOWNLOAD
         </button>
     </div>
 
-    <!-- 6. DOWNLOAD LOADER -->
+    <!-- LOADING OVERLAY -->
     <div class="dl-overlay" id="dlOverlay">
-        <div class="gold-ring"></div>
-        <div style="margin-top:20px; color:#D4AF37; font-family:'Cinzel'; letter-spacing:2px;">SAVING TO GALLERY...</div>
+        <div class="speed-spinner"></div>
+        <div class="dl-status">Saving to Gallery...</div>
+        <div style="color: #555; font-size: 0.8rem; margin-top:5px;">Please wait 1-5 seconds</div>
     </div>
 
     <script>
@@ -248,18 +237,16 @@
         const PROXY = "https://api.allorigins.win/raw?url=";
         let currentUrl = "";
 
-        // --- INTRO & INITIAL LOAD ---
+        // --- INIT ---
         window.onload = () => {
-            // 1. Load Data Immediately
-            fetchData("Black and Gold Luxury");
-
-            // 2. Handle Splash Screen Animation
-            const intro = document.getElementById('introScreen');
-            // Intro stays for 3.5 seconds so user can read the name
+            fetchData("Dark Gold Aesthetic");
+            
+            // Remove splash screen after 3 seconds
             setTimeout(() => {
+                const intro = document.getElementById('introScreen');
                 intro.classList.add('fade-out');
-                setTimeout(() => { intro.style.display = 'none'; }, 1000);
-            }, 3500); 
+                setTimeout(() => { intro.style.display = 'none'; }, 800);
+            }, 3000);
         };
 
         // --- SEARCH ---
@@ -270,11 +257,9 @@
 
         async function fetchData(query) {
             const gallery = document.getElementById('gallery');
-            // Only clear gallery if intro is gone, to avoid flickering behind splash
             if(document.getElementById('introScreen').style.display === 'none') {
-                gallery.innerHTML = '<p style="text-align:center;color:#444">Loading...</p>';
+                gallery.innerHTML = '<p style="text-align:center;color:#666">Loading...</p>';
             }
-            
             try {
                 const res = await fetch(`${PROXY}${encodeURIComponent(API + `?search=${query}&limit=20`)}`);
                 const data = await res.json();
@@ -293,7 +278,7 @@
                     <div class="dl-icon" onclick="event.stopPropagation(); processDownload('${url}')">
                         <i class="fa-solid fa-download"></i>
                     </div>
-                    <img src="${url}" onload="this.classList.add('loaded')">
+                    <img src="${url}" loading="lazy" onload="this.classList.add('loaded')">
                 `;
                 card.onclick = () => openLightbox(url);
                 gallery.appendChild(card);
@@ -310,32 +295,49 @@
             document.getElementById('lightbox').classList.remove('active');
         }
 
-        // --- FORCE DOWNLOAD ---
+        // --- ⚡ ULTRA FAST DOWNLOAD LOGIC ---
         async function processDownload(url) {
             const overlay = document.getElementById('dlOverlay');
-            overlay.style.display = 'flex';
+            overlay.style.display = 'flex'; // Show loading immediately
 
             try {
+                // 1. Fetch data as a Blob (Binary Large Object)
+                // This downloads the image data into the browser's memory first
                 const response = await fetch(`${PROXY}${encodeURIComponent(url)}`);
+                
+                if (!response.ok) throw new Error('Network error');
+                
                 const blob = await response.blob();
+                
+                // 2. Create a temporary URL for the blob
                 const blobUrl = window.URL.createObjectURL(blob);
                 
+                // 3. Force the browser to "Save As"
                 const link = document.createElement('a');
                 link.href = blobUrl;
-                link.download = `Agency-Faizan-${Date.now()}.jpg`;
+                // Unique name ensures it saves as a new file every time
+                link.download = `Gallery-Agency-${Math.floor(Math.random()*100000)}.jpg`;
                 document.body.appendChild(link);
+                
+                // 4. Trigger Click
                 link.click();
+                
+                // 5. Cleanup
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(blobUrl);
 
+                // Success Feedback
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                    alert("✅ Downloaded Successfully!");
-                }, 800);
+                    alert("✅ Image Saved to Gallery!");
+                }, 500); // Small buffer to ensure file system catches up
 
             } catch (error) {
+                console.error("DL Error:", error);
                 overlay.style.display = 'none';
+                // Fallback for strict browsers
                 window.open(url, '_blank');
+                alert("Opening image in new tab. Please Long Press > Save Image.");
             }
         }
         
