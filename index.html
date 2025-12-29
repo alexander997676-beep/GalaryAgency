@@ -3,471 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gallery Agency | Quantum</title>
+    <title>Gallery Agency | Royal Gold</title>
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Font: Plus Jakarta Sans (Modern Geometric) -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts: Cinzel (Luxury) & Outfit (Modern) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #3b82f6; /* Electric Blue */
-            --secondary: #10b981; /* Emerald */
-            --bg-dark: #020617; /* Deep Navy Black */
-            --card-bg: #0f172a;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glass: rgba(15, 23, 42, 0.7);
-            --border: rgba(255, 255, 255, 0.08);
-            --glow: 0 0 20px rgba(59, 130, 246, 0.15);
+            --gold-primary: #FFD700;
+            --gold-secondary: #C5A059;
+            --gold-glow: rgba(255, 215, 0, 0.4);
+            --bg-deep: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 215, 0, 0.2); /* Gold Border */
+            --glass-blur: blur(20px);
+            --text-main: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
             color: var(--text-main);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             overflow-x: hidden;
-            /* Subtle Mesh Gradient Background */
+            /* Premium Dark Gold Mesh Gradient */
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.1), transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.1), transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.08), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.08), transparent 40%),
+                linear-gradient(to bottom, #000, #0a0a0a);
             background-attachment: fixed;
         }
 
-        /* --- HEADER --- */
+        /* --- NAVBAR --- */
         nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            padding: 15px 24px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            z-index: 50;
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            padding: 15px 30px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .brand { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
-        .brand span { 
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+
+        .brand { 
+            font-family: 'Cinzel', serif; 
+            font-size: 1.4rem; font-weight: 700; 
+            letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(to right, #fff, var(--gold-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-        .status-dot { height: 8px; width: 8px; background: var(--secondary); border-radius: 50%; box-shadow: 0 0 10px var(--secondary); }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            margin-top: 80px;
-            padding: 40px 20px 10px;
-            text-align: center;
-            position: relative;
+            text-shadow: 0 0 20px var(--gold-glow);
         }
 
+        .premium-badge {
+            font-size: 0.7rem; color: var(--gold-primary);
+            border: 1px solid var(--gold-primary);
+            padding: 4px 10px; border-radius: 20px;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* --- HERO --- */
+        .hero { margin-top: 100px; padding: 40px 20px; text-align: center; }
+        
         h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeIn 1s ease;
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem; font-weight: 400; margin-bottom: 30px;
+            color: white;
         }
+        h1 span { color: var(--gold-primary); font-weight: 700; }
 
-        /* Search Bar */
+        /* Transparent Glass Search Bar */
         .search-container {
             position: relative;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            max-width: 650px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
             padding: 8px;
-            display: flex;
-            gap: 10px;
-            max-width: 600px;
-            margin: 0 auto 25px;
-            transition: 0.3s;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+            display: flex; align-items: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: 0.4s ease;
         }
         .search-container:focus-within {
-            background: rgba(255,255,255,0.08);
-            border-color: var(--primary);
-            box-shadow: var(--glow);
+            background: rgba(255, 215, 0, 0.05);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 30px var(--gold-glow);
         }
-        
+
         input {
-            flex: 1; background: transparent; border: none; color: white; 
-            padding: 0 10px; font-size: 1.1rem; font-family: inherit;
+            flex: 1; background: transparent; border: none;
+            color: white; font-size: 1.1rem; padding: 0 20px;
+            font-family: 'Outfit', sans-serif;
         }
-        /* Custom Placeholder Color */
-        ::placeholder { color: #555; }
+        ::placeholder { color: #888; font-weight: 300; }
 
-        .btn-search {
-            width: 50px; height: 50px;
-            border-radius: 14px; border: none;
-            background: var(--primary); color: white;
-            cursor: pointer; font-size: 1.2rem;
-            transition: 0.2s;
+        .search-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            border: none; cursor: pointer;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+            color: black; font-size: 1.2rem;
             display: flex; align-items: center; justify-content: center;
-        }
-        .btn-search:hover { background: #2563eb; transform: scale(1.05); }
-
-        /* Smart Tags (Horizontal Scroll) */
-        .tags-wrapper {
-            max-width: 800px;
-            margin: 0 auto 30px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 10px;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        .tags-wrapper::-webkit-scrollbar { display: none; }
-
-        .tag {
-            display: inline-block;
-            padding: 8px 20px;
-            margin: 0 5px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            cursor: pointer;
+            box-shadow: 0 0 15px var(--gold-glow);
             transition: 0.3s;
         }
-        .tag:hover, .tag.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
+        .search-btn:hover { transform: scale(1.1) rotate(-10deg); }
 
-        /* --- GALLERY GRID --- */
+        /* --- GALLERY (TRANSPARENT CARDS) --- */
         .gallery {
-            flex: 1;
-            column-count: 2;
-            column-gap: 20px;
-            padding: 0 20px;
-            max-width: 1600px;
-            margin: 0 auto;
-            width: 100%;
+            column-count: 2; column-gap: 20px;
+            padding: 20px 5%; max-width: 1600px; margin: 0 auto;
         }
-        @media (min-width: 768px) { .gallery { column-count: 3; } }
-        @media (min-width: 1200px) { .gallery { column-count: 5; } }
+        @media(min-width: 768px) { .gallery { column-count: 3; } }
+        @media(min-width: 1200px) { .gallery { column-count: 5; } }
 
         .card {
-            background: var(--card-bg);
+            background: rgba(255,255,255,0.02); /* Almost fully transparent */
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
             margin-bottom: 20px;
             break-inside: avoid;
-            position: relative;
-            overflow: hidden;
-            cursor: zoom-in;
-            transform: translateZ(0); /* Hardware Acceleration */
-            transition: transform 0.3s;
+            position: relative; overflow: hidden;
+            backdrop-filter: blur(5px); /* Blur content behind card */
+            transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .card:hover { transform: translateY(-5px); }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--gold-glow);
+        }
 
         .card img {
-            width: 100%; height: auto; display: block;
-            opacity: 0; transition: opacity 0.5s;
+            width: 100%; display: block;
+            border-radius: 16px; opacity: 0; transition: opacity 0.8s;
+            mix-blend-mode: normal;
         }
         .card img.loaded { opacity: 1; }
 
+        /* Gold Hover Overlay */
+        .card::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(197, 160, 89, 0.3), transparent);
+            opacity: 0; transition: 0.3s; pointer-events: none;
+        }
+        .card:hover::after { opacity: 1; }
+
         /* --- FOOTER --- */
         footer {
+            margin-top: 60px; padding: 40px;
             text-align: center;
-            padding: 40px 20px 20px;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
-            background: linear-gradient(to top, #000, transparent);
+            border-top: 1px solid var(--glass-border);
+            background: linear-gradient(to top, rgba(197, 160, 89, 0.05), transparent);
         }
         .signature {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #475569;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem; letter-spacing: 2px;
+            color: var(--gold-primary);
             text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
+        .signature span { color: #888; font-size: 0.7rem; display: block; margin-bottom: 5px; font-family: 'Outfit', sans-serif; letter-spacing: 1px; }
 
-        /* --- FLOATING ACTION BUTTON (Shuffle) --- */
-        .fab {
-            position: fixed;
-            bottom: 30px; right: 30px;
-            width: 60px; height: 60px;
-            background: var(--text-main);
-            color: var(--bg-dark);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
-            cursor: pointer;
-            z-index: 90;
-            transition: transform 0.3s;
-        }
-        .fab:hover { transform: rotate(180deg); }
-        .fab:active { transform: scale(0.9); }
-
-        /* --- LIGHTBOX --- */
+        /* --- LIGHTBOX (PREMIUM) --- */
         .lightbox {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.95);
+            background: rgba(5, 5, 5, 0.95);
             backdrop-filter: blur(15px);
-            z-index: 100;
-            display: none;
-            justify-content: center; align-items: center;
-            flex-direction: column;
-            opacity: 0; transition: opacity 0.3s;
+            z-index: 200; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
         }
-        .lightbox.active { display: flex; opacity: 1; }
-        
-        .lb-img-container {
-            position: relative;
-            max-width: 95%; max-height: 80vh;
+        .lightbox.active { display: flex; animation: goldFade 0.4s ease; }
+
+        .lb-img {
+            max-width: 90%; max-height: 75vh;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 50px rgba(197, 160, 89, 0.2);
+            border: 1px solid var(--glass-border);
         }
-        .lightbox img { width: 100%; height: auto; display: block; max-height: 80vh; object-fit: contain; }
 
-        .lb-toolbar {
-            margin-top: 20px;
-            display: flex; gap: 15px;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.1);
+        .lb-actions {
+            margin-top: 30px; display: flex; gap: 20px;
         }
-        .tool-btn {
-            background: transparent; border: none; color: white;
-            font-size: 1.2rem; cursor: pointer; padding: 5px 10px;
-            transition: 0.2s;
-        }
-        .tool-btn:hover { color: var(--primary); transform: scale(1.1); }
-        
-        .close-lb { position: absolute; top: 20px; right: 20px; font-size: 2rem; color: white; cursor: pointer; z-index: 101; }
 
-        /* Skeleton & Animations */
-        .skeleton { height: 250px; background: #1e293b; border-radius: 16px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-gold {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 12px 30px; border-radius: 50px;
+            font-family: 'Cinzel', serif; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .btn-gold:hover {
+            background: var(--gold-primary); color: black;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .close-lb {
+            position: absolute; top: 30px; right: 30px;
+            color: var(--gold-secondary); font-size: 2rem; cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-lb:hover { color: var(--gold-primary); transform: rotate(90deg); }
+
+        /* Toast */
+        .toast {
+            position: fixed; top: 90px; left: 50%; transform: translateX(-50%) translateY(-20px);
+            background: rgba(20, 20, 20, 0.9); border: 1px solid var(--gold-primary);
+            color: var(--gold-primary); padding: 12px 30px; border-radius: 4px;
+            font-family: 'Cinzel', serif; letter-spacing: 1px;
+            opacity: 0; transition: 0.4s; z-index: 300; pointer-events: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Skeleton Loading (Gold Shimmer) */
+        .skeleton {
+            height: 250px; border-radius: 16px; margin-bottom: 20px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(197, 160, 89, 0.1) 50%, rgba(255,255,255,0.02) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @keyframes goldFade { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="brand">GALLERY <span>AGENCY</span></div>
-        <div class="status-dot" title="Live"></div>
+        <div class="brand">Gallery <span>Royal</span></div>
+        <div class="premium-badge">Premium</div>
     </nav>
 
     <div class="hero">
-        <h1>Discover <span id="typingText"></span></h1>
+        <h1>Experience <span>Luxury</span></h1>
         
         <div class="search-container">
-            <input type="text" id="queryInput" placeholder="Search anything..." autocomplete="off">
-            <button class="btn-search" onclick="runSearch()"><i class="fa-solid fa-search"></i></button>
-        </div>
-
-        <div class="tags-wrapper">
-            <span class="tag" onclick="runSearch('Imran Khan')">Imran Khan</span>
-            <span class="tag" onclick="runSearch('Islamic Aesthetic')">Islamic</span>
-            <span class="tag" onclick="runSearch('Dark Aesthetic')">Dark</span>
-            <span class="tag" onclick="runSearch('Neon City')">Neon</span>
-            <span class="tag" onclick="runSearch('Nature 4K')">Nature</span>
-            <span class="tag" onclick="runSearch('Luxury Cars')">Luxury</span>
-            <span class="tag" onclick="runSearch('Anime Wallpaper')">Anime</span>
+            <input type="text" id="queryInput" placeholder="Search (e.g. Gold Aesthetic)...">
+            <button class="search-btn" onclick="runSearch()"><i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="gallery" id="gallery"></div>
+    <div id="gallery" class="gallery"></div>
 
-    <!-- Shuffle Button -->
-    <div class="fab" onclick="loadHomeFeed()" title="Shuffle Feed">
-        <i class="fa-solid fa-shuffle"></i>
-    </div>
-
-    <!-- Footer -->
     <footer>
-        <div class="signature">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
+        <div class="signature">
+            <span>Development & Design</span>
+            Muhammad Faizan Ahmed
+        </div>
     </footer>
 
-    <!-- Lightbox -->
+    <!-- Premium Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="close-lb" onclick="closeLightbox()">&times;</div>
         
-        <div class="lb-img-container">
-            <img id="lbImg" src="">
-        </div>
+        <img id="lbImg" class="lb-img" src="">
 
-        <div class="lb-toolbar">
-            <button class="tool-btn" onclick="downloadImage()" title="Download"><i class="fa-solid fa-download"></i></button>
-            <button class="tool-btn" onclick="copyLink()" title="Copy Link"><i class="fa-regular fa-copy"></i></button>
-            <button class="tool-btn" onclick="shareImage()" title="Share"><i class="fa-solid fa-share-nodes"></i></button>
+        <div class="lb-actions">
+            <!-- Share -->
+            <button class="btn-gold" onclick="shareImage()">
+                <i class="fa-solid fa-share-nodes"></i> Share
+            </button>
+            
+            <!-- Download -->
+            <button class="btn-gold" onclick="forceDownload()">
+                <i class="fa-solid fa-download"></i> Save
+            </button>
         </div>
     </div>
 
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">Notification</div>
+
     <script>
-        // --- SETUP ---
-        const API_BASE = "https://pinterest-search.apis-bj-devs.workers.dev/";
+        // CONFIG
+        const API_URL = "https://pinterest-search.apis-bj-devs.workers.dev/";
         const PROXY = "https://api.allorigins.win/raw?url=";
         let currentUrl = "";
 
-        // --- TYPEWRITER EFFECT ---
-        const words = ["Beauty", "Imran Khan", "Aesthetics", "Islamic Art", "Wallpapers"];
-        let i = 0;
-        let timer;
-
-        function typeWriter() {
-            const heading = document.getElementById("typingText");
-            heading.innerText = words[i];
-            i = (i + 1) % words.length;
-        }
-        setInterval(typeWriter, 2000);
-        typeWriter(); // Start immediately
-
-        // --- INIT ---
-        window.onload = loadHomeFeed;
-
-        // --- CORE FUNCTIONS ---
-
-        // 1. Load Home Feed (Imran Khan + Islamic Mix)
-        async function loadHomeFeed() {
+        // 1. AUTO LOAD (Premium Mix)
+        window.onload = async () => {
             const gallery = document.getElementById('gallery');
-            gallery.innerHTML = Array(10).fill('<div class="skeleton"></div>').join('');
-            document.getElementById('queryInput').value = ""; // Clear search
+            // Show Gold Skeletons
+            gallery.innerHTML = Array(8).fill('<div class="skeleton"></div>').join('');
             
+            showToast("Welcome to Royal Edition");
+
             try {
-                // Parallel Fetching for Speed
-                const [res1, res2] = await Promise.all([
-                    fetch(`${PROXY}${encodeURIComponent(API_BASE + "?search=Imran Khan Aesthetic&limit=20")}`).then(r => r.json()),
-                    fetch(`${PROXY}${encodeURIComponent(API_BASE + "?search=Islamic Aesthetic&limit=20")}`).then(r => r.json())
+                const [r1, r2] = await Promise.all([
+                    fetch(`${PROXY}${encodeURIComponent(API_URL + "?search=Imran Khan Aesthetic&limit=15")}`).then(r=>r.json()),
+                    fetch(`${PROXY}${encodeURIComponent(API_URL + "?search=Islamic Aesthetic&limit=15")}`).then(r=>r.json())
                 ]);
 
-                const list1 = res1.result?.pins || [];
-                const list2 = res2.result?.pins || [];
+                const mix = [...(r1.result?.pins||[]), ...(r2.result?.pins||[])].sort(()=>Math.random()-0.5);
+                render(mix);
+            } catch(e) { console.log(e); }
+        };
 
-                // Combine and Shuffle thoroughly
-                let mix = [...list1, ...list2].sort(() => Math.random() - 0.5);
-
-                renderGrid(mix);
-
-            } catch (err) {
-                console.error(err);
-                gallery.innerHTML = `<p style="text-align:center; color:#666;">Server busy. Try the shuffle button.</p>`;
-            }
-        }
-
-        // 2. Search Function
-        async function runSearch(term = null) {
-            const query = term || document.getElementById('queryInput').value.trim();
+        // 2. SEARCH ENGINE
+        async function runSearch() {
+            const query = document.getElementById('queryInput').value;
             if(!query) return;
 
-            // Set input value if clicked from tags
-            document.getElementById('queryInput').value = query;
-
             const gallery = document.getElementById('gallery');
-            gallery.innerHTML = Array(6).fill('<div class="skeleton"></div>').join('');
-            document.activeElement.blur(); // Hide keyboard
+            gallery.innerHTML = Array(6).fill('<div class="skeleton"></div>').join(''); // Skeletons
+            document.activeElement.blur();
 
             try {
-                const url = `${PROXY}${encodeURIComponent(API_BASE + `?search=${encodeURIComponent(query)}&limit=30`)}`;
-                const res = await fetch(url);
+                const res = await fetch(`${PROXY}${encodeURIComponent(API_URL + `?search=${query}&limit=30`)}`);
                 const data = await res.json();
-
-                if(data.result && data.result.pins.length > 0) {
-                    renderGrid(data.result.pins);
-                } else {
-                    gallery.innerHTML = `<p style="text-align:center; color:#666; width:100%;">No results found for "${query}"</p>`;
-                }
-            } catch (err) {
-                console.error(err);
-            }
+                if(data.result?.pins) render(data.result.pins);
+            } catch(e) { console.log(e); }
         }
 
-        // 3. Render Grid
-        function renderGrid(pins) {
+        // 3. RENDER FUNCTION
+        function render(pins) {
             const gallery = document.getElementById('gallery');
             gallery.innerHTML = "";
-
-            pins.forEach((pin, index) => {
-                const imgUrl = pin.media.images.orig;
-                
+            pins.forEach(pin => {
+                const url = pin.media.images.orig;
                 const card = document.createElement('div');
                 card.className = 'card';
-                // Staggered animation
-                card.style.animation = `fadeIn 0.6s ease ${index * 0.05}s backwards`;
-
-                const img = document.createElement('img');
-                img.src = imgUrl;
-                img.loading = "lazy";
-                img.onload = () => img.classList.add('loaded'); // Fade in on load
-                
-                card.onclick = () => openLightbox(imgUrl);
-                
-                card.appendChild(img);
+                card.innerHTML = `<img src="${url}" onload="this.classList.add('loaded')">`;
+                card.onclick = () => openLightbox(url);
                 gallery.appendChild(card);
             });
         }
 
-        // --- LIGHTBOX ---
+        // 4. LIGHTBOX
         function openLightbox(url) {
             currentUrl = url;
             document.getElementById('lbImg').src = url;
-            const lb = document.getElementById('lightbox');
-            lb.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.getElementById('lightbox').classList.add('active');
         }
-
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = 'auto';
         }
 
-        // --- ACTIONS ---
-        async function downloadImage() {
+        // 5. PREMIUM DOWNLOAD (Force Save)
+        async function forceDownload() {
+            showToast("Downloading Asset...");
             try {
-                const blob = await fetch(currentUrl).then(r => r.blob());
+                const response = await fetch(currentUrl);
+                const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
+                a.style.display = 'none';
                 a.href = url;
-                a.download = `gallery-quantum-${Date.now()}.jpg`;
+                a.download = `royal-gallery-${Date.now()}.jpg`;
+                document.body.appendChild(a);
                 a.click();
+                window.URL.revokeObjectURL(url);
+                showToast("Saved to Gallery");
             } catch (e) {
                 window.open(currentUrl, '_blank');
+                showToast("Opened in New Tab");
             }
         }
 
-        function copyLink() {
-            navigator.clipboard.writeText(currentUrl);
-            alert("📋 Link Copied!");
-        }
-
+        // 6. SHARE
         async function shareImage() {
-            if(navigator.share) {
+            if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: 'Gallery Quantum',
-                        text: 'Check this out!',
+                        title: 'Royal Gallery',
+                        text: 'Shared from Royal Edition',
                         url: currentUrl
                     });
-                } catch(e) { console.log('Share closed'); }
+                } catch (e) {}
             } else {
-                copyLink();
+                navigator.clipboard.writeText(currentUrl);
+                showToast("Link Copied");
             }
         }
 
-        // Event Listeners
+        // UTILS
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
         document.getElementById('queryInput').addEventListener('keypress', (e) => {
             if(e.key === 'Enter') runSearch();
-        });
-
-        document.getElementById('lightbox').addEventListener('click', (e) => {
-            if(e.target === document.getElementById('lightbox')) closeLightbox();
         });
 
     </script>
