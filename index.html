@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gallery Agency | Ultra Fast</title>
+    <title>Gallery Agency | Login</title>
     
     <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,173 +13,99 @@
         :root {
             --bg: #050505;
             --card-bg: #0f0f0f;
-            /* Ultra Premium Gold Gradient */
             --gold: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
             --gold-solid: #D4AF37;
             --text: #ffffff;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Manrope', sans-serif; overflow-x: hidden; }
+        
+        /* --- UTILS --- */
+        .hidden { display: none !important; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Manrope', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* --- INTRO SPLASH SCREEN --- */
-        .intro-overlay {
-            position: fixed; inset: 0; background: #000;
-            z-index: 9999;
+        /* --- LOGIN SCREEN --- */
+        .login-container {
+            position: fixed; inset: 0; z-index: 2000;
+            background: var(--bg);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            padding: 20px;
         }
+        .login-box {
+            width: 100%; max-width: 400px;
+            background: #111; padding: 30px; border-radius: 15px;
+            border: 1px solid #333;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .login-title {
+            font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold-solid);
+            margin-bottom: 20px;
+        }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group input {
+            width: 100%; padding: 12px; border-radius: 5px;
+            background: #222; border: 1px solid #444; color: white;
+            font-family: 'Manrope';
+        }
+        .btn-auth {
+            width: 100%; padding: 12px; border-radius: 5px; margin-bottom: 10px;
+            font-weight: bold; cursor: pointer; border: none; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .btn-login { background: var(--gold); color: black; }
+        .btn-google { background: white; color: black; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .toggle-text { margin-top: 15px; font-size: 0.9rem; color: #888; cursor: pointer; }
+        .toggle-text span { color: var(--gold-solid); }
+
+        /* --- LOGOUT BUTTON (IN NAVBAR) --- */
+        .btn-logout {
+            background: transparent; border: 1px solid var(--gold-solid); color: var(--gold-solid);
+            padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        /* --- EXISTING STYLES --- */
+        .intro-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease; }
         .intro-overlay.fade-out { opacity: 0; visibility: hidden; }
+        .intro-logo { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 800; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: zoomIn 1.2s forwards; letter-spacing: 2px; text-align: center; line-height: 1.2; }
+        .intro-line { width: 0; height: 2px; background: var(--gold); margin: 15px 0; animation: lineExpand 0.8s forwards 0.5s; }
+        .intro-sub { font-family: 'Manrope', sans-serif; color: var(--gold-solid); font-size: 0.7rem; letter-spacing: 3px; font-weight: 600; text-transform: uppercase; opacity: 0; animation: fadeUp 0.8s forwards 1s; text-align: center; padding: 0 10px; }
         
-        .intro-logo {
-            font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 800;
-            background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            opacity: 0; animation: zoomIn 1.2s forwards; letter-spacing: 2px; text-align: center;
-            line-height: 1.2;
-        }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 15px 20px; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .brand { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 800; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 1px; }
         
-        .intro-line {
-            width: 0; height: 2px; background: var(--gold); margin: 15px 0;
-            animation: lineExpand 0.8s forwards 0.5s;
-        }
-
-        .intro-sub {
-            font-family: 'Manrope', sans-serif;
-            color: var(--gold-solid); font-size: 0.7rem; letter-spacing: 3px;
-            font-weight: 600; text-transform: uppercase;
-            opacity: 0; animation: fadeUp 0.8s forwards 1s;
-            text-align: center; padding: 0 10px;
-        }
-
-        /* --- NAVBAR --- */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            padding: 15px 20px;
-            background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .brand {
-            font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 800;
-            background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        .status-badge {
-            font-size: 0.6rem; color: #000; background: var(--gold);
-            padding: 4px 10px; font-weight: bold; letter-spacing: 1px;
-            border-radius: 2px;
-        }
-
-        /* --- HERO --- */
         .hero { margin-top: 100px; padding: 0 20px; text-align: center; }
+        .search-container { position: relative; max-width: 600px; margin: 0 auto 40px auto; border: 1px solid rgba(212, 175, 55, 0.5); background: rgba(255,255,255,0.03); display: flex; align-items: center; padding: 5px; border-radius: 8px; }
+        input.search-input { flex: 1; background: transparent; border: none; padding: 12px; color: #fff; font-size: 1rem; font-family: 'Manrope'; }
+        .btn-search { width: 45px; height: 45px; border: none; border-radius: 6px; background: var(--gold); color: #000; font-size: 1.1rem; cursor: pointer; }
         
-        .search-container {
-            position: relative; max-width: 600px; margin: 0 auto 40px auto;
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            background: rgba(255,255,255,0.03);
-            display: flex; align-items: center;
-            padding: 5px; border-radius: 8px;
-        }
-
-        input {
-            flex: 1; background: transparent; border: none; padding: 12px;
-            color: #fff; font-size: 1rem; font-family: 'Manrope';
-        }
-        .btn-search {
-            width: 45px; height: 45px; border: none; border-radius: 6px;
-            background: var(--gold); color: #000; font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        /* --- GALLERY --- */
-        .gallery {
-            column-count: 2; column-gap: 10px; padding: 10px; max-width: 1400px; margin: 0 auto;
-        }
+        .gallery { column-count: 2; column-gap: 10px; padding: 10px; max-width: 1400px; margin: 0 auto; }
         @media(min-width: 768px) { .gallery { column-count: 3; } }
-
-        .card {
-            background: var(--card-bg); margin-bottom: 10px; break-inside: avoid;
-            position: relative; overflow: hidden; border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
+        .card { background: var(--card-bg); margin-bottom: 10px; break-inside: avoid; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
         .card img { width: 100%; display: block; opacity: 0; transition: opacity 0.5s; }
         .card img.loaded { opacity: 1; }
-
-        /* Small download button on images */
-        .dl-icon {
-            position: absolute; bottom: 8px; right: 8px;
-            width: 35px; height: 35px;
-            background: rgba(0,0,0,0.8); border: 1px solid var(--gold-solid);
-            color: var(--gold-solid); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 10; font-size: 0.9rem;
-        }
+        .dl-icon { position: absolute; bottom: 8px; right: 8px; width: 35px; height: 35px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-solid); color: var(--gold-solid); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem; }
         .dl-icon:active { transform: scale(0.9); background: var(--gold); color: black; }
-
-        /* --- LIGHTBOX --- */
-        .lightbox {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-            z-index: 200; display: none;
-            flex-direction: column; align-items: center; justify-content: center;
-        }
+        
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .lightbox.active { display: flex; animation: fadeIn 0.2s; }
-
-        .lb-img-frame {
-            padding: 3px; background: var(--gold); border-radius: 8px;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
-        }
+        .lb-img-frame { padding: 3px; background: var(--gold); border-radius: 8px; box-shadow: 0 0 40px rgba(212, 175, 55, 0.15); }
         .lb-img { max-width: 95vw; max-height: 60vh; display: block; border-radius: 6px; }
-
-        /* --- BIG DOWNLOAD BUTTON --- */
-        .btn-premium-dl {
-            margin-top: 25px;
-            background: var(--gold); color: black;
-            font-family: 'Cinzel', serif; font-weight: 700;
-            padding: 15px 50px; border: none; border-radius: 50px;
-            font-size: 1rem; cursor: pointer; letter-spacing: 1px;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            display: flex; align-items: center; gap: 10px;
-        }
+        .btn-premium-dl { margin-top: 25px; background: var(--gold); color: black; font-family: 'Cinzel', serif; font-weight: 700; padding: 15px 50px; border: none; border-radius: 50px; font-size: 1rem; cursor: pointer; letter-spacing: 1px; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); display: flex; align-items: center; gap: 10px; }
         .btn-premium-dl:active { transform: scale(0.95); background: white; }
-
-        .close-lb {
-            position: absolute; top: 20px; right: 20px;
-            color: #888; font-size: 2rem; cursor: pointer;
-        }
-
-        /* --- FAST LOADER OVERLAY --- */
-        .dl-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-            z-index: 500; display: none;
-            flex-direction: column; align-items: center; justify-content: center;
-        }
-        .speed-spinner {
-            width: 50px; height: 50px;
-            border: 4px solid #333; border-top: 4px solid #D4AF37;
-            border-radius: 50%; animation: spin 0.6s infinite linear; /* Fast spin */
-        }
+        .close-lb { position: absolute; top: 20px; right: 20px; color: #888; font-size: 2rem; cursor: pointer; }
+        
+        .dl-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .speed-spinner { width: 50px; height: 50px; border: 4px solid #333; border-top: 4px solid #D4AF37; border-radius: 50%; animation: spin 0.6s infinite linear; }
         .dl-status { margin-top: 15px; color: var(--gold-solid); font-family: 'Manrope'; font-weight: bold; }
-
         footer { margin-top: 40px; padding: 30px; text-align: center; border-top: 1px solid #222; }
         .footer-text { font-family: 'Cinzel'; color: #666; font-size: 0.7rem; letter-spacing: 2px; }
-
+        
         @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes lineExpand { from { width: 0; } to { width: 100px; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
     </style>
 </head>
 <body>
@@ -191,75 +117,184 @@
         <div class="intro-sub">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
     </div>
 
-    <!-- NAVBAR -->
-    <nav>
-        <div class="brand">GALLERY AGENCY</div>
-        <div class="status-badge">FAST PRO</div>
-    </nav>
-
-    <!-- SEARCH -->
-    <div class="hero">
-        <div class="search-container">
-            <input type="text" id="queryInput" placeholder="Search Wallpapers...">
-            <button class="btn-search" onclick="runSearch()"><i class="fa-solid fa-search"></i></button>
+    <!-- LOGIN SCREEN (NEW) -->
+    <div id="authScreen" class="login-container hidden">
+        <div class="login-box">
+            <div class="login-title">Welcome Back</div>
+            
+            <input type="email" id="email" placeholder="Email Address" class="input-group" style="width:100%; padding:12px; margin-bottom:10px; border-radius:5px; border:none; background:#222; color:white;">
+            <input type="password" id="password" placeholder="Password" class="input-group" style="width:100%; padding:12px; margin-bottom:20px; border-radius:5px; border:none; background:#222; color:white;">
+            
+            <button id="emailAuthBtn" class="btn-auth btn-login">Sign In</button>
+            <button id="googleBtn" class="btn-auth btn-google"><i class="fa-brands fa-google"></i> Sign in with Google</button>
+            
+            <div class="toggle-text" id="toggleAuthMode">
+                New here? <span>Create Account</span>
+            </div>
+            <div id="authError" style="color:red; margin-top:10px; font-size:0.8rem;"></div>
         </div>
     </div>
 
-    <!-- GALLERY -->
-    <div id="gallery" class="gallery"></div>
+    <!-- MAIN APP (Hidden until logged in) -->
+    <div id="appContent" class="hidden">
+        <nav>
+            <div class="brand">GALLERY AGENCY</div>
+            <div style="display:flex; align-items:center;">
+                <div class="status-badge">FAST PRO</div>
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+        </nav>
 
-    <footer>
-        <div class="footer-text">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
-    </footer>
+        <div class="hero">
+            <div class="search-container">
+                <input type="text" id="queryInput" class="search-input" placeholder="Search Wallpapers...">
+                <button class="btn-search" onclick="runSearch()"><i class="fa-solid fa-search"></i></button>
+            </div>
+        </div>
 
-    <!-- LIGHTBOX -->
+        <div id="gallery" class="gallery"></div>
+
+        <footer>
+            <div class="footer-text">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
+        </footer>
+    </div>
+
+    <!-- UTILS (Lightbox & Loaders) -->
     <div class="lightbox" id="lightbox">
         <div class="close-lb" onclick="closeLightbox()">&times;</div>
-        
-        <div class="lb-img-frame">
-            <img id="lbImg" class="lb-img" src="">
-        </div>
-        
+        <div class="lb-img-frame"><img id="lbImg" class="lb-img" src=""></div>
         <button class="btn-premium-dl" onclick="startDownload()">
             <i class="fa-solid fa-bolt"></i> FAST DOWNLOAD
         </button>
     </div>
-
-    <!-- LOADING OVERLAY -->
     <div class="dl-overlay" id="dlOverlay">
         <div class="speed-spinner"></div>
         <div class="dl-status">Saving to Gallery...</div>
         <div style="color: #555; font-size: 0.8rem; margin-top:5px;">Please wait 1-5 seconds</div>
     </div>
 
-    <script>
+    <!-- 🔥 FIREBASE & APP LOGIC 🔥 -->
+    <script type="module">
+        // 1. IMPORT FIREBASE
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { 
+            getAuth, 
+            signInWithPopup, 
+            GoogleAuthProvider, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // 2. CONFIG (Aapka existing config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBa2yFuetUUqp-1_NJa9wIuOl7ZnlbKkdc",
+            authDomain: "gallery-app-new-94a81.firebaseapp.com",
+            projectId: "gallery-app-new-94a81",
+            storageBucket: "gallery-app-new-94a81.firebasestorage.app",
+            messagingSenderId: "306499800270",
+            appId: "1:306499800270:web:6f8f7d3776da0ea3b0549f",
+            measurementId: "G-YF9CTH2XC4"
+        };
+
+        // 3. INITIALIZE
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const analytics = getAnalytics(app);
+        const provider = new GoogleAuthProvider();
+
+        // 4. AUTHENTICATION LOGIC
+        const authScreen = document.getElementById('authScreen');
+        const appContent = document.getElementById('appContent');
+        const introScreen = document.getElementById('introScreen');
+        const emailInput = document.getElementById('email');
+        const passInput = document.getElementById('password');
+        const errorMsg = document.getElementById('authError');
+        let isSignUp = false;
+
+        // Monitor Login State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is logged in
+                console.log("Logged in:", user.email);
+                authScreen.classList.add('hidden');
+                appContent.classList.remove('hidden');
+                // Run search if gallery is empty
+                if(document.getElementById('gallery').innerHTML === "") fetchData("Dark Gold Aesthetic");
+            } else {
+                // User is logged out
+                authScreen.classList.remove('hidden');
+                appContent.classList.add('hidden');
+            }
+        });
+
+        // Google Login
+        document.getElementById('googleBtn').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch((error) => {
+                errorMsg.innerText = error.message;
+            });
+        });
+
+        // Email Login/Signup Toggle
+        document.getElementById('toggleAuthMode').addEventListener('click', () => {
+            isSignUp = !isSignUp;
+            const btn = document.getElementById('emailAuthBtn');
+            const title = document.querySelector('.login-title');
+            const toggle = document.querySelector('#toggleAuthMode span');
+            
+            if (isSignUp) {
+                title.innerText = "Create Account";
+                btn.innerText = "Sign Up";
+                toggle.innerText = "Login to existing account";
+            } else {
+                title.innerText = "Welcome Back";
+                btn.innerText = "Sign In";
+                toggle.innerText = "Create Account";
+            }
+        });
+
+        // Email Auth Action
+        document.getElementById('emailAuthBtn').addEventListener('click', () => {
+            const email = emailInput.value;
+            const pass = passInput.value;
+            
+            if (isSignUp) {
+                createUserWithEmailAndPassword(auth, email, pass)
+                    .catch((error) => errorMsg.innerText = error.message);
+            } else {
+                signInWithEmailAndPassword(auth, email, pass)
+                    .catch((error) => errorMsg.innerText = "Invalid Email or Password");
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // 5. GALLERY LOGIC (Attached to Window for HTML access)
         const API = "https://pinterest-search.apis-bj-devs.workers.dev/";
         const PROXY = "https://api.allorigins.win/raw?url=";
         let currentUrl = "";
 
-        // --- INIT ---
+        // Splash screen timer
         window.onload = () => {
-            fetchData("Dark Gold Aesthetic");
-            
-            // Remove splash screen after 3 seconds
             setTimeout(() => {
-                const intro = document.getElementById('introScreen');
-                intro.classList.add('fade-out');
-                setTimeout(() => { intro.style.display = 'none'; }, 800);
+                introScreen.classList.add('fade-out');
+                setTimeout(() => { introScreen.style.display = 'none'; }, 800);
             }, 3000);
         };
 
-        // --- SEARCH ---
-        async function runSearch() {
+        window.runSearch = async function() {
             const q = document.getElementById('queryInput').value;
             if(q) fetchData(q);
         }
 
         async function fetchData(query) {
             const gallery = document.getElementById('gallery');
-            if(document.getElementById('introScreen').style.display === 'none') {
-                gallery.innerHTML = '<p style="text-align:center;color:#666">Loading...</p>';
-            }
+            gallery.innerHTML = '<p style="text-align:center;color:#666">Loading...</p>';
             try {
                 const res = await fetch(`${PROXY}${encodeURIComponent(API + `?search=${query}&limit=20`)}`);
                 const data = await res.json();
@@ -285,68 +320,42 @@
             });
         }
 
-        // --- LIGHTBOX ---
-        function openLightbox(url) {
+        // Lightbox & Download attached to window
+        window.openLightbox = (url) => {
             currentUrl = url;
             document.getElementById('lbImg').src = url;
             document.getElementById('lightbox').classList.add('active');
         }
-        function closeLightbox() {
+        window.closeLightbox = () => {
             document.getElementById('lightbox').classList.remove('active');
         }
+        window.startDownload = () => { processDownload(currentUrl); }
 
-        // --- ⚡ ULTRA FAST DOWNLOAD LOGIC ---
-        async function processDownload(url) {
+        window.processDownload = async (url) => {
             const overlay = document.getElementById('dlOverlay');
-            overlay.style.display = 'flex'; // Show loading immediately
-
+            overlay.style.display = 'flex';
             try {
-                // 1. Fetch data as a Blob (Binary Large Object)
-                // This downloads the image data into the browser's memory first
                 const response = await fetch(`${PROXY}${encodeURIComponent(url)}`);
-                
                 if (!response.ok) throw new Error('Network error');
-                
                 const blob = await response.blob();
-                
-                // 2. Create a temporary URL for the blob
                 const blobUrl = window.URL.createObjectURL(blob);
-                
-                // 3. Force the browser to "Save As"
                 const link = document.createElement('a');
                 link.href = blobUrl;
-                // Unique name ensures it saves as a new file every time
                 link.download = `Gallery-Agency-${Math.floor(Math.random()*100000)}.jpg`;
                 document.body.appendChild(link);
-                
-                // 4. Trigger Click
                 link.click();
-                
-                // 5. Cleanup
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(blobUrl);
-
-                // Success Feedback
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                    alert("✅ Image Saved to Gallery!");
-                }, 500); // Small buffer to ensure file system catches up
-
+                    alert("✅ Image Saved!");
+                }, 500);
             } catch (error) {
-                console.error("DL Error:", error);
+                console.error(error);
                 overlay.style.display = 'none';
-                // Fallback for strict browsers
                 window.open(url, '_blank');
-                alert("Opening image in new tab. Please Long Press > Save Image.");
             }
         }
-        
-        function startDownload() { processDownload(currentUrl); }
-
-        document.getElementById('queryInput').addEventListener('keypress', (e)=>{
-            if(e.key==='Enter') runSearch();
-        });
-
     </script>
 </body>
 </html>
