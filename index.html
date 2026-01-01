@@ -19,52 +19,22 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Manrope', sans-serif; overflow-x: hidden; }
-        
-        /* --- UTILS --- */
         .hidden { display: none !important; }
 
         /* --- LOGIN SCREEN --- */
-        .login-container {
-            position: fixed; inset: 0; z-index: 2000;
-            background: var(--bg);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px;
-        }
-        .login-box {
-            width: 100%; max-width: 400px;
-            background: #111; padding: 30px; border-radius: 15px;
-            border: 1px solid #333;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-        .login-title {
-            font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold-solid);
-            margin-bottom: 20px;
-        }
+        .login-container { position: fixed; inset: 0; z-index: 2000; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .login-box { width: 100%; max-width: 400px; background: #111; padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .login-title { font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold-solid); margin-bottom: 20px; }
         .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group input {
-            width: 100%; padding: 12px; border-radius: 5px;
-            background: #222; border: 1px solid #444; color: white;
-            font-family: 'Manrope';
-        }
-        .btn-auth {
-            width: 100%; padding: 12px; border-radius: 5px; margin-bottom: 10px;
-            font-weight: bold; cursor: pointer; border: none; font-size: 1rem;
-            transition: 0.3s;
-        }
+        .input-group input { width: 100%; padding: 12px; border-radius: 5px; background: #222; border: 1px solid #444; color: white; font-family: 'Manrope'; }
+        .btn-auth { width: 100%; padding: 12px; border-radius: 5px; margin-bottom: 10px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem; transition: 0.3s; }
         .btn-login { background: var(--gold); color: black; }
         .btn-google { background: white; color: black; display: flex; align-items: center; justify-content: center; gap: 10px;}
         .toggle-text { margin-top: 15px; font-size: 0.9rem; color: #888; cursor: pointer; }
         .toggle-text span { color: var(--gold-solid); }
+        .btn-logout { background: transparent; border: 1px solid var(--gold-solid); color: var(--gold-solid); padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-left: 10px; }
 
-        /* --- LOGOUT BUTTON (IN NAVBAR) --- */
-        .btn-logout {
-            background: transparent; border: 1px solid var(--gold-solid); color: var(--gold-solid);
-            padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
-            margin-left: 10px;
-        }
-
-        /* --- EXISTING STYLES --- */
+        /* --- MAIN STYLES --- */
         .intro-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease; }
         .intro-overlay.fade-out { opacity: 0; visibility: hidden; }
         .intro-logo { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 800; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: zoomIn 1.2s forwards; letter-spacing: 2px; text-align: center; line-height: 1.2; }
@@ -73,6 +43,7 @@
         
         nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 15px 20px; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .brand { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 800; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 1px; }
+        .status-badge { font-size: 0.6rem; color: #000; background: var(--gold); padding: 4px 10px; font-weight: bold; letter-spacing: 1px; border-radius: 2px; }
         
         .hero { margin-top: 100px; padding: 0 20px; text-align: center; }
         .search-container { position: relative; max-width: 600px; margin: 0 auto 40px auto; border: 1px solid rgba(212, 175, 55, 0.5); background: rgba(255,255,255,0.03); display: flex; align-items: center; padding: 5px; border-radius: 8px; }
@@ -117,7 +88,7 @@
         <div class="intro-sub">DESIGNED BY MUHAMMAD FAIZAN AHMED</div>
     </div>
 
-    <!-- LOGIN SCREEN (NEW) -->
+    <!-- LOGIN SCREEN -->
     <div id="authScreen" class="login-container hidden">
         <div class="login-box">
             <div class="login-title">Welcome Back</div>
@@ -135,7 +106,7 @@
         </div>
     </div>
 
-    <!-- MAIN APP (Hidden until logged in) -->
+    <!-- MAIN APP -->
     <div id="appContent" class="hidden">
         <nav>
             <div class="brand">GALLERY AGENCY</div>
@@ -159,7 +130,7 @@
         </footer>
     </div>
 
-    <!-- UTILS (Lightbox & Loaders) -->
+    <!-- UTILS -->
     <div class="lightbox" id="lightbox">
         <div class="close-lb" onclick="closeLightbox()">&times;</div>
         <div class="lb-img-frame"><img id="lbImg" class="lb-img" src=""></div>
@@ -173,9 +144,9 @@
         <div style="color: #555; font-size: 0.8rem; margin-top:5px;">Please wait 1-5 seconds</div>
     </div>
 
-    <!-- 🔥 FIREBASE & APP LOGIC 🔥 -->
+    <!-- 🔥 FIREBASE SETUP 🔥 -->
     <script type="module">
-        // 1. IMPORT FIREBASE
+        // 1. IMPORT FIREBASE (CDN LINKS)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
         import { 
@@ -188,15 +159,15 @@
             signOut 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // 2. CONFIG (Aapka existing config)
+        // 2. YOUR NEW CONFIGURATION
         const firebaseConfig = {
-            apiKey: "AIzaSyBa2yFuetUUqp-1_NJa9wIuOl7ZnlbKkdc",
-            authDomain: "gallery-app-new-94a81.firebaseapp.com",
-            projectId: "gallery-app-new-94a81",
-            storageBucket: "gallery-app-new-94a81.firebasestorage.app",
-            messagingSenderId: "306499800270",
-            appId: "1:306499800270:web:6f8f7d3776da0ea3b0549f",
-            measurementId: "G-YF9CTH2XC4"
+          apiKey: "AIzaSyBa2yFuetUUqp-1_NJa9wIuOl7ZnlbKkdc",
+          authDomain: "gallery-app-new-94a81.firebaseapp.com",
+          projectId: "gallery-app-new-94a81",
+          storageBucket: "gallery-app-new-94a81.firebasestorage.app",
+          messagingSenderId: "306499800270",
+          appId: "1:306499800270:web:de3e9f2cc0222ca4b0549f",
+          measurementId: "G-5SR7YXDJ12"
         };
 
         // 3. INITIALIZE
@@ -205,7 +176,7 @@
         const analytics = getAnalytics(app);
         const provider = new GoogleAuthProvider();
 
-        // 4. AUTHENTICATION LOGIC
+        // 4. AUTH LOGIC
         const authScreen = document.getElementById('authScreen');
         const appContent = document.getElementById('appContent');
         const introScreen = document.getElementById('introScreen');
@@ -214,30 +185,24 @@
         const errorMsg = document.getElementById('authError');
         let isSignUp = false;
 
-        // Monitor Login State
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is logged in
                 console.log("Logged in:", user.email);
                 authScreen.classList.add('hidden');
                 appContent.classList.remove('hidden');
-                // Run search if gallery is empty
                 if(document.getElementById('gallery').innerHTML === "") fetchData("Dark Gold Aesthetic");
             } else {
-                // User is logged out
                 authScreen.classList.remove('hidden');
                 appContent.classList.add('hidden');
             }
         });
 
-        // Google Login
         document.getElementById('googleBtn').addEventListener('click', () => {
             signInWithPopup(auth, provider).catch((error) => {
                 errorMsg.innerText = error.message;
             });
         });
 
-        // Email Login/Signup Toggle
         document.getElementById('toggleAuthMode').addEventListener('click', () => {
             isSignUp = !isSignUp;
             const btn = document.getElementById('emailAuthBtn');
@@ -255,31 +220,23 @@
             }
         });
 
-        // Email Auth Action
         document.getElementById('emailAuthBtn').addEventListener('click', () => {
             const email = emailInput.value;
             const pass = passInput.value;
-            
             if (isSignUp) {
-                createUserWithEmailAndPassword(auth, email, pass)
-                    .catch((error) => errorMsg.innerText = error.message);
+                createUserWithEmailAndPassword(auth, email, pass).catch((error) => errorMsg.innerText = error.message);
             } else {
-                signInWithEmailAndPassword(auth, email, pass)
-                    .catch((error) => errorMsg.innerText = "Invalid Email or Password");
+                signInWithEmailAndPassword(auth, email, pass).catch((error) => errorMsg.innerText = "Invalid Email or Password");
             }
         });
 
-        // Logout
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            signOut(auth);
-        });
+        document.getElementById('logoutBtn').addEventListener('click', () => { signOut(auth); });
 
-        // 5. GALLERY LOGIC (Attached to Window for HTML access)
+        // 5. GALLERY LOGIC
         const API = "https://pinterest-search.apis-bj-devs.workers.dev/";
         const PROXY = "https://api.allorigins.win/raw?url=";
         let currentUrl = "";
 
-        // Splash screen timer
         window.onload = () => {
             setTimeout(() => {
                 introScreen.classList.add('fade-out');
@@ -320,7 +277,6 @@
             });
         }
 
-        // Lightbox & Download attached to window
         window.openLightbox = (url) => {
             currentUrl = url;
             document.getElementById('lbImg').src = url;
